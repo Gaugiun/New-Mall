@@ -76,6 +76,26 @@ public class MallServiceImpl implements MallService{
         return cskaoyanMallBrandMapper.updateBrand(cskaoyanMallBrand);
     }
 
+    @Override
+    public List<CskaoyanMallBrand> selectAllBrand() {
+        return cskaoyanMallBrandMapper.selectAllBrand();
+    }
+
+    @Override
+    public void insertCatagory(CskaoyanMallCategory cskaoyanMallCategory) {
+        cskaoyanMallCategoryMapper.insertCategory(cskaoyanMallCategory);
+    }
+
+    @Override
+    public CskaoyanMallCategory selectCategoryByName(String name) {
+        return cskaoyanMallCategoryMapper.selectCategoryByName(name);
+    }
+
+    @Override
+    public void updateCategory(CskaoyanMallCategory cskaoyanMallCategory) {
+        cskaoyanMallCategoryMapper.updateCategory(cskaoyanMallCategory);
+    }
+
     public List<CskaoyanMallRegion> selectRegionByPId(Integer Pid) {
         List<CskaoyanMallRegion> regions = cskaoyanMallRegionMapper.selectRegionByPId(Pid);
         for(CskaoyanMallRegion region : regions){

@@ -22,4 +22,9 @@ public interface CskaoyanMallCategoryMapper {
 
     boolean deleteCategoryById(Integer id);
 
+    void insertCategory(CskaoyanMallCategory cskaoyanMallCategory);
+
+    CskaoyanMallCategory selectCategoryByName(String name);
+
+    void updateCategory(CskaoyanMallCategory cskaoyanMallCategory);
 }

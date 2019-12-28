@@ -19,12 +19,12 @@ import java.util.Map;
 @RestController
 public class MallController {
 
-    /**
-     * 行政管理  admin/region/list
-     */
     @Autowired
     MallService mallService;
 
+    /**
+     * 行政管理  admin/region/list
+     */
     @RequestMapping("region/list")
     public BaseRespVo UserList(){
         List<CskaoyanMallRegion> regions = mallService.selectRegion();
@@ -63,6 +63,59 @@ public class MallController {
 
         return resp;
     }
+    /**
+     * 添加品牌制造商  admin/brand/create
+     * 数据库的name改为unique  不能重复
+     */
+    @RequestMapping("brand/create")
+    public BaseRespVo CreateBrand(@RequestBody CskaoyanMallBrand brand){
+        List<CskaoyanMallBrand> brands = mallService.selectAllBrand();
+
+        brand.setId(0);
+        brand.setSortOrder((byte) (brands.size()+1));
+        brand.setAddTime(new Date(System.currentTimeMillis()));
+        brand.setUpdateTime(new Date(System.currentTimeMillis()));
+        brand.setDeleted(false);
+        mallService.insertBrand(brand);
+
+        CskaoyanMallBrand cskaoyanMallBrand = mallService.selectBrandByName(brand.getName());
+
+        BaseRespVo resp = new BaseRespVo();
+        resp.setData(cskaoyanMallBrand);
+        resp.setErrno(0);
+        resp.setErrmsg("成功");
+
+        return resp;
+    }
+
+    @RequestMapping("brand/delete")
+    public BaseRespVo DeleteBrand(@RequestBody CskaoyanMallBrand cskaoyanMallBrand){
+        Integer id = cskaoyanMallBrand.getId();
+        boolean b = mallService.deleteBrand(id);
+
+        BaseRespVo resp = new BaseRespVo();
+        resp.setErrno(0);
+        resp.setErrmsg("成功");
+
+        return resp;
+    }
+
+    @RequestMapping("brand/update")
+    public BaseRespVo UpdateBrand(@RequestBody CskaoyanMallBrand cskaoyanMallBrand){
+        Integer id = cskaoyanMallBrand.getId();
+        cskaoyanMallBrand.setUpdateTime(new Date(System.currentTimeMillis()));
+        boolean b = mallService.updateBrand(cskaoyanMallBrand);
+
+        CskaoyanMallBrand after = mallService.selectBrandByName(cskaoyanMallBrand.getName());
+
+        BaseRespVo resp = new BaseRespVo();
+        resp.setData(after);
+        resp.setErrno(0);
+        resp.setErrmsg("成功");
+
+        return resp;
+    }
+
 
     /**
      * 商品类目  admin/category/list
@@ -104,53 +157,44 @@ public class MallController {
     }
 
     /**
-     * 添加品牌制造商  admin/brand/create
-     * 数据库的name改为unique  不能重复
-     */
-    @RequestMapping("brand/create")
-    public BaseRespVo CreateBrand(@RequestBody CskaoyanMallBrand brand){
-        brand.setId(0);
-        brand.setSortOrder(null);
-        brand.setAddTime(new Date(System.currentTimeMillis()));
-        brand.setUpdateTime(new Date(System.currentTimeMillis()));
-        brand.setDeleted(false);
-        mallService.insertBrand(brand);
+     * 添加商品类目
+     * */
+    @RequestMapping("category/create")
+    public BaseRespVo CreateCategory(@RequestBody CskaoyanMallCategory cskaoyanMallCategory){
+        List<CskaoyanMallCategory> categories = mallService.selectCategory();
+        cskaoyanMallCategory.setAddTime(new Date(System.currentTimeMillis()));
+        cskaoyanMallCategory.setSortOrder((byte) (categories.size()+1));
+        mallService.insertCatagory(cskaoyanMallCategory);
 
-        CskaoyanMallBrand cskaoyanMallBrand = mallService.selectBrandByName(brand.getName());
+        String name = cskaoyanMallCategory.getName();
+        CskaoyanMallCategory category = mallService.selectCategoryByName(name);
 
         BaseRespVo resp = new BaseRespVo();
-        resp.setData(cskaoyanMallBrand);
+        resp.setData(category);
         resp.setErrno(0);
         resp.setErrmsg("成功");
 
         return resp;
     }
 
-    @RequestMapping("brand/delete")
-    public BaseRespVo DeleteBrand(@RequestBody CskaoyanMallBrand cskaoyanMallBrand){
-        Integer id = cskaoyanMallBrand.getId();
-        boolean b = mallService.deleteBrand(id);
-
+    /**
+     * 编辑商品类目
+     * */
+    @RequestMapping("category/update")
+    public BaseRespVo UpdateCategory(@RequestBody CskaoyanMallCategory cskaoyanMallCategory){
         BaseRespVo resp = new BaseRespVo();
-        resp.setErrno(0);
-        resp.setErrmsg("成功");
-
+        if (cskaoyanMallCategory.getId().equals(cskaoyanMallCategory.getPid())){
+            resp.setData(null);
+            resp.setErrno(10000);
+            resp.setErrmsg("不能将自己作为父类目录");
+        }else {
+            cskaoyanMallCategory.setUpdateTime(new Date(System.currentTimeMillis()));
+            mallService.updateCategory(cskaoyanMallCategory);
+            resp.setErrno(0);
+            resp.setErrmsg("成功");
+        }
         return resp;
     }
 
-    @RequestMapping("brand/update")
-    public BaseRespVo UpdateBrand(@RequestBody CskaoyanMallBrand cskaoyanMallBrand){
-        Integer id = cskaoyanMallBrand.getId();
-        boolean b = mallService.updateBrand(cskaoyanMallBrand);
-
-        CskaoyanMallBrand after = mallService.selectBrandByName(cskaoyanMallBrand.getName());
-
-        BaseRespVo resp = new BaseRespVo();
-        resp.setData(after);
-        resp.setErrno(0);
-        resp.setErrmsg("成功");
-
-        return resp;
-    }
 
 }

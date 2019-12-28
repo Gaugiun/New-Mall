@@ -25,4 +25,12 @@ public interface MallService {
     boolean deleteBrand(Integer id);
 
     boolean updateBrand(CskaoyanMallBrand cskaoyanMallBrand);
+
+    List<CskaoyanMallBrand> selectAllBrand();
+
+    void insertCatagory(CskaoyanMallCategory cskaoyanMallCategory);
+
+    CskaoyanMallCategory selectCategoryByName(String name);
+
+    void updateCategory(CskaoyanMallCategory cskaoyanMallCategory);
 }

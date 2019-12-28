@@ -76,6 +76,7 @@
         <if test="id!=null">
           and id like "%"#{id}"%"
         </if>
+        and deleted = 0
       </where>
     </select>
     <insert id="insertBrand" parameterType="com.baidu.mall.bean.CskaoyanMallBrand">
@@ -89,6 +90,10 @@
   </update>
   <update id="updateBrand" parameterType="com.baidu.mall.bean.CskaoyanMallBrand">
     update cskaoyan_mall_brand set
-    `name` = #{name}, `desc` = #{desc}, pic_url = #{picUrl}, floor_price = #{floorPrice} where id = #{id}
+    `name` = #{name}, `desc` = #{desc}, pic_url = #{picUrl}, floor_price = #{floorPrice}, update_time = #{updateTime}
+    where id = #{id}
   </update>
+  <select id="selectAllBrand" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from cskaoyan_mall_brand
+  </select>
 </mapper>

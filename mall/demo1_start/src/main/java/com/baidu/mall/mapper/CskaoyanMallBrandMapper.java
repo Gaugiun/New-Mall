@@ -24,4 +24,6 @@ public interface CskaoyanMallBrandMapper {
     boolean deleteBrandById(Integer id);
 
     boolean updateBrand(CskaoyanMallBrand cskaoyanMallBrand);
+
+    List<CskaoyanMallBrand> selectAllBrand();
 }
