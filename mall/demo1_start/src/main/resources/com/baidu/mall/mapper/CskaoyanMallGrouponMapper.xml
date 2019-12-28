@@ -15,11 +15,11 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_id, groupon_id, rules_id, user_id, creator_user_id, add_time, update_time, 
+    id, order_id, groupon_id, rules_id, user_id, creator_user_id, add_time, update_time,
     share_url, payed, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_groupon
     where id = #{id,jdbcType=INTEGER}
@@ -78,4 +78,5 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
 </mapper>

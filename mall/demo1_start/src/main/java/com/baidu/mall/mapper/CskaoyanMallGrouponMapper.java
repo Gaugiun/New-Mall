@@ -10,4 +10,5 @@ public interface CskaoyanMallGrouponMapper {
     int updateByPrimaryKeySelective(CskaoyanMallGroupon record);
 
     int updateByPrimaryKey(CskaoyanMallGroupon record);
+
 }

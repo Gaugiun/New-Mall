@@ -1,7 +1,8 @@
 package com.baidu.mall.bean;
 
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
+import java.util.List;
 
 public class CskaoyanMallTopic {
     private Integer id;
@@ -18,7 +19,7 @@ public class CskaoyanMallTopic {
 
     private Integer sortOrder;
 
-    private String goods;
+    private List<Object> goods;
 
     private Date addTime;
 
@@ -41,7 +42,7 @@ public class CskaoyanMallTopic {
     }
 
     public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
+        this.title = title;
     }
 
     public String getSubtitle() {
@@ -49,7 +50,7 @@ public class CskaoyanMallTopic {
     }
 
     public void setSubtitle(String subtitle) {
-        this.subtitle = subtitle == null ? null : subtitle.trim();
+        this.subtitle = subtitle;
     }
 
     public BigDecimal getPrice() {
@@ -65,7 +66,7 @@ public class CskaoyanMallTopic {
     }
 
     public void setReadCount(String readCount) {
-        this.readCount = readCount == null ? null : readCount.trim();
+        this.readCount = readCount;
     }
 
     public String getPicUrl() {
@@ -73,7 +74,7 @@ public class CskaoyanMallTopic {
     }
 
     public void setPicUrl(String picUrl) {
-        this.picUrl = picUrl == null ? null : picUrl.trim();
+        this.picUrl = picUrl;
     }
 
     public Integer getSortOrder() {
@@ -84,12 +85,12 @@ public class CskaoyanMallTopic {
         this.sortOrder = sortOrder;
     }
 
-    public String getGoods() {
+    public List<Object> getGoods() {
         return goods;
     }
 
-    public void setGoods(String goods) {
-        this.goods = goods == null ? null : goods.trim();
+    public void setGoods(List<Object> goods) {
+        this.goods = goods;
     }
 
     public Date getAddTime() {
@@ -121,6 +122,6 @@ public class CskaoyanMallTopic {
     }
 
     public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
+        this.content = content;
     }
 }

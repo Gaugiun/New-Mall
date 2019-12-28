@@ -16,6 +16,6 @@ public interface CskaoyanMallUserMapper {
 
     int updateByPrimaryKey(CskaoyanMallUser record);
 
-    List<CskaoyanMallUser> selectAllUser(String username,String mobile);
+    List<CskaoyanMallUser> selectAllUser(String username, String mobile);
 
 }

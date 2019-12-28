@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface UserService {
 
-    List<CskaoyanMallUser> selectAllUser(String username,String mobile);
+    List<CskaoyanMallUser> selectAllUser(String username, String mobile);
 
     List<CskaoyanMallAddress> selectAddress(String name, Integer userId);
 

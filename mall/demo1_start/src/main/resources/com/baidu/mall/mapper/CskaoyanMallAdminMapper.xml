@@ -14,11 +14,11 @@
     <result column="role_ids" jdbcType="VARCHAR" property="roleIds" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, username, password, last_login_ip, last_login_time, avatar, add_time, update_time, 
+    id, username, password, last_login_ip, last_login_time, avatar, add_time, update_time,
     deleted, role_ids
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_admin
     where id = #{id,jdbcType=INTEGER}
@@ -73,4 +73,12 @@
       role_ids = #{roleIds,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <select id="selectByName" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from cskaoyan_mall_admin where username = #{userName}
+    </select>
+  <select id="selectPermissionByUserName" resultType="java.lang.String">
+    select p
+  </select>
 </mapper>

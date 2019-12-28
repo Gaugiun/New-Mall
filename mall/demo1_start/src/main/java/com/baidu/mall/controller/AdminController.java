@@ -1,10 +1,15 @@
 package com.baidu.mall.controller;
 
 import com.baidu.mall.bean.BaseRespVo;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -16,6 +21,25 @@ public class AdminController {
      * @param map
      * @return
      */
+    /*@RequestMapping("auth/login")
+    public BaseRespVo login(@RequestBody HashMap<String, String> map){
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        String username = map.get("username");
+        String password = map.get("password");
+        Subject subject = SecurityUtils.getSubject();
+        try {
+            subject.login(new UsernamePasswordToken(username, password));
+            Serializable id = subject.getSession().getId();
+            baseRespVo.setErrno(0);
+            baseRespVo.setData(id);
+            baseRespVo.setErrmsg("成功");
+            return baseRespVo;
+        } catch (AuthenticationException e) {
+            baseRespVo.setErrno(10000);
+            baseRespVo.setErrmsg("失败");
+            return baseRespVo;
+        }
+    }*/
     @RequestMapping("auth/login")
     public BaseRespVo login(@RequestBody HashMap<String, String> map){
 
@@ -53,12 +77,4 @@ public class AdminController {
     }
 
 
-/*    @Autowired
-    UserService userService;
-
-    @RequestMapping("user/list")
-    public List<User> userList(int pageNum,int pageSize){
-        List<User> users = userService.queryUsers(pageNum, pageSize);
-        return users;
-    }*/
 }
