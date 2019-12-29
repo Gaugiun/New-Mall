@@ -1,6 +1,7 @@
 package com.baidu.mall.config;
 
 import com.baidu.mall.convert.String2DateConverter;
+import com.baidu.mall.convert.String2StringArrayConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -15,5 +16,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addFormatters(FormatterRegistry registry) {
 
         registry.addConverter(new String2DateConverter());
+        registry.addConverter(new String2StringArrayConverter());
     }
 }

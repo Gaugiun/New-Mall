@@ -2,6 +2,8 @@ package com.baidu.mall.mapper;
 
 import com.baidu.mall.bean.CskaoyanMallIssue;
 
+import java.util.List;
+
 public interface CskaoyanMallIssueMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -10,4 +12,8 @@ public interface CskaoyanMallIssueMapper {
     int updateByPrimaryKeySelective(CskaoyanMallIssue record);
 
     int updateByPrimaryKey(CskaoyanMallIssue record);
+
+    List<CskaoyanMallIssue> selectByQuestion(String question);
+
+    int insert(String question, String answer);
 }

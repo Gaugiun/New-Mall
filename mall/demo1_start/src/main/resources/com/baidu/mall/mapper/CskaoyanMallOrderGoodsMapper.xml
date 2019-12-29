@@ -18,11 +18,11 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, order_id, goods_id, goods_name, goods_sn, product_id, number, price, specifications, 
+    id, order_id, goods_id, goods_name, goods_sn, product_id, number, price, specifications,
     pic_url, comment, add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_order_goods
     where id = #{id,jdbcType=INTEGER}
@@ -93,4 +93,19 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByOrderId" parameterType="Integer" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from cskaoyan_mall_order_goods
+    <where>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+    </where>
+  </select>
+  <select id="selectById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_order_goods
+    where id = #{id,jdbcType=INTEGER}
+  </select>
 </mapper>
