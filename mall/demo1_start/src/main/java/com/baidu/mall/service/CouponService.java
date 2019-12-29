@@ -1,6 +1,7 @@
 package com.baidu.mall.service;
 
 import com.baidu.mall.bean.CskaoyanMallCoupon;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,6 +19,7 @@ public interface CouponService {
 
     boolean deleteCoupon(CskaoyanMallCoupon cskaoyanMallCoupon);
 
-    CskaoyanMallCoupon createCoupon(Map<String, Object> map);
+    Integer createCoupon(Map<String, Object> map);
 
+    CskaoyanMallCoupon selectById(@Param("id") Integer id);
 }
