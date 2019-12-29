@@ -109,7 +109,9 @@ public class TopicController {
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
         String s = cskaoyanMallTopic.getPrice().toString();
         String readCount = cskaoyanMallTopic.getReadCount();
-        if (s == null || readCount == null){
+        String picUrl = cskaoyanMallTopic.getPicUrl();
+        String content = cskaoyanMallTopic.getContent();
+        if (s == null || readCount == null || picUrl == null || content == null){
             baseRespVo.setErrmsg("参数不对");
             baseRespVo.setErrno(402);
             return baseRespVo;

@@ -102,26 +102,22 @@ public class CouponController {
 
     /**
      * 新建优惠券
-     * @param cskaoyanMallCoupon
+     * @param map
      * @return
      */
-   /* @RequestMapping("admin/coupon/create")
-    public BaseRespVo createCoupon(@RequestBody CskaoyanMallCoupon cskaoyanMallCoupon){
-        CskaoyanMallCoupon cskaoyanMallCoupon1 = couponService.createCoupon(cskaoyanMallCoupon);
-        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
-        baseRespVo.setData(cskaoyanMallCoupon1);
-        baseRespVo.setErrno(0);
-        baseRespVo.setErrmsg("成功");
-        return baseRespVo;
-    }*/
     @RequestMapping("admin/coupon/create")
     public BaseRespVo createCoupon(@RequestBody Map<String, Object> map){
-
-        CskaoyanMallCoupon cskaoyanMallCoupon = couponService.createCoupon(map);
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
-        //baseRespVo.setData(cskaoyanMallCoupon1);
-        baseRespVo.setErrno(0);
-        baseRespVo.setErrmsg("成功");
+        Integer i = couponService.createCoupon(map);
+        if (i != null){
+            CskaoyanMallCoupon cskaoyanMallCoupon = couponService.selectById(i);
+            baseRespVo.setData(cskaoyanMallCoupon);
+            baseRespVo.setErrno(0);
+            baseRespVo.setErrmsg("成功");
+            return baseRespVo;
+        }
+        baseRespVo.setErrno(401);
+        baseRespVo.setErrmsg("参数不对");
         return baseRespVo;
     }
 }

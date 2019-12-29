@@ -29,4 +29,5 @@ public interface CskaoyanMallCouponMapper {
 
     int updateByPrimaryKey(CskaoyanMallCoupon record);
 
+    CskaoyanMallCoupon selectById(@Param("id") Integer id);
 }

@@ -75,7 +75,7 @@ public class CouponServiceImpl implements CouponService {
     }
 
     @Override
-    public CskaoyanMallCoupon createCoupon(Map<String, Object> map) {
+    public Integer createCoupon(Map<String, Object> map) {
         CskaoyanMallCoupon cskaoyanMallCoupon = new CskaoyanMallCoupon();
         cskaoyanMallCoupon.setStartTime((java.util.Date) map.get("startTime"));
         cskaoyanMallCoupon.setName((String) map.get("name"));
@@ -84,7 +84,7 @@ public class CouponServiceImpl implements CouponService {
         cskaoyanMallCoupon.setTotal(Integer.parseInt((String) map.get("total")));
         cskaoyanMallCoupon.setDiscount(BigDecimal.valueOf((Long.parseLong((String) map.get("discount")))));
         cskaoyanMallCoupon.setMin(BigDecimal.valueOf((Long.parseLong((String) map.get("min")))));
-        cskaoyanMallCoupon.setLimit(Short.parseShort((String) map.get("limit")));
+        cskaoyanMallCoupon.setLimit(Short.parseShort(String.valueOf(map.get("limit"))));
         cskaoyanMallCoupon.setType(Short.parseShort(String.valueOf(map.get("type"))));
         cskaoyanMallCoupon.setStatus(Short.parseShort(String.valueOf(map.get("status"))));
         cskaoyanMallCoupon.setGoodsType(Short.parseShort(String.valueOf(map.get("goodsType"))));
@@ -95,10 +95,15 @@ public class CouponServiceImpl implements CouponService {
         cskaoyanMallCoupon.setEndTime((Date) map.get("endTime"));
         cskaoyanMallCoupon.setId(null);
         int insert = cskaoyanMallCouponMapper.insert(cskaoyanMallCoupon);
+        if (insert > 0){
+            return cskaoyanMallCoupon.getId();
+        }
+        return null;
+    }
 
-        CskaoyanMallCouponExample cskaoyanMallCouponExample = new CskaoyanMallCouponExample();
-        cskaoyanMallCouponExample.createCriteria().andNameEqualTo(cskaoyanMallCoupon.getName());
-        List<CskaoyanMallCoupon> cskaoyanMallCoupons = cskaoyanMallCouponMapper.selectByExample(cskaoyanMallCouponExample);
-        return cskaoyanMallCoupons.remove(0);
+    @Override
+    public CskaoyanMallCoupon selectById(Integer id) {
+        CskaoyanMallCoupon cskaoyanMallCoupon = cskaoyanMallCouponMapper.selectById(id);
+        return cskaoyanMallCoupon;
     }
 }
