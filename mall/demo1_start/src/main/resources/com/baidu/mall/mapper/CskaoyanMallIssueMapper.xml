@@ -13,7 +13,7 @@
     id, question, answer, add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_issue
     where id = #{id,jdbcType=INTEGER}
@@ -52,4 +52,7 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <select id="selectAllIssue" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/> from cskaoyan_mall_issue
+    </select>
 </mapper>

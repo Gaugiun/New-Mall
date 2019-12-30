@@ -27,15 +27,15 @@
     <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, goods_sn, name, category_id, brand_id, gallery, keywords, brief, is_on_sale, 
-    sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price, 
+    id, goods_sn, name, category_id, brand_id, gallery, keywords, brief, is_on_sale,
+    sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
     add_time, update_time, deleted
   </sql>
   <sql id="Blob_Column_List">
     detail
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
@@ -159,4 +159,21 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectNewGoods" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from cskaoyan_mall_goods
+    where is_new = 1;
+  </select>
+  <select id="selectHotGoods" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from cskaoyan_mall_goods
+    where is_hot = 1;
+  </select>
+  <select id="countGoods" resultType="int">
+    select count(id) from cskaoyan_mall_goods
+  </select>
+  <select id="selectShareUrlById" resultType="java.lang.String">
+    select share_url from cskaoyan_mall_goods where id = #{id}
+  </select>
+  <select id="selectGoodsListByCategoryId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from cskaoyan_mall_goods where categor_id = #{categoryId}
+  </select>
 </mapper>

@@ -1,7 +1,11 @@
 package com.baidu.mall.mapper;
 
 import com.baidu.mall.bean.CskaoyanMallCoupon;
+import org.apache.ibatis.annotations.Mapper;
 
+import java.util.List;
+
+@Mapper
 public interface CskaoyanMallCouponMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -10,4 +14,6 @@ public interface CskaoyanMallCouponMapper {
     int updateByPrimaryKeySelective(CskaoyanMallCoupon record);
 
     int updateByPrimaryKey(CskaoyanMallCoupon record);
+
+    List<CskaoyanMallCoupon> selectCoupon();
 }

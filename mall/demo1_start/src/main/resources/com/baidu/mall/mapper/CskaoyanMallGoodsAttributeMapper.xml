@@ -14,7 +14,7 @@
     id, goods_id, attribute, value, add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_goods_attribute
     where id = #{id,jdbcType=INTEGER}
@@ -57,4 +57,7 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <select id="selectAttributeByGoodsId" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/> from cskaoyan_mall_goods_attribute where goods_id = #{id}
+    </select>
 </mapper>

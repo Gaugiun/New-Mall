@@ -1,8 +1,8 @@
 package com.baidu.mall;
 
-import com.baidu.mall.bean.CskaoyanMallRegion;
-import com.baidu.mall.bean.CskaoyanMallStorage;
-import com.baidu.mall.bean.CskaoyanMallUser;
+import com.baidu.mall.bean.*;
+import com.baidu.mall.mapper.CskaoyanMallBrandMapper;
+import com.baidu.mall.mapper.CskaoyanMallGoodsSpecificationMapper;
 import com.baidu.mall.mapper.CskaoyanMallStorageMapper;
 import com.baidu.mall.mapper.CskaoyanMallUserMapper;
 import com.baidu.mall.service.MallService;
@@ -18,16 +18,13 @@ import java.util.List;
 public class MyTest {
 
     @Autowired
-    CskaoyanMallStorageMapper cskaoyanMallStorageMapper;
+    CskaoyanMallBrandMapper selectBrandByGoodsId;
 
     @Test
     public void mytest(){
-        String s = "dc39f340685e4dfc8d162beaeb510540.jpg";
-        CskaoyanMallStorage storage = cskaoyanMallStorageMapper.selectStorageByKey(s);
-        if (storage==null){
-            System.out.println("null!");
-            return;
-        }
-        System.out.println(storage.toString());
+        CskaoyanMallBrand cskaoyanMallBrand = selectBrandByGoodsId.selectBrandByGoodsId(1055016);
+        String s = cskaoyanMallBrand.toString();
+        System.out.println(s);
+
     }
 }

@@ -117,5 +117,11 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectCategoryForIdNameIconUrl" resultType="com.baidu.mall.bean.CskaoyanMallCategoryToIdNameIconUrl">
+    select id,`name`,icon_url from cskaoyan_mall_category
+  </select>
+    <select id="selectFilterCategoryListByCategoryId" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/> from cskaoyan_mall_category where id != #{categoryId}
+    </select>
 
 </mapper>
