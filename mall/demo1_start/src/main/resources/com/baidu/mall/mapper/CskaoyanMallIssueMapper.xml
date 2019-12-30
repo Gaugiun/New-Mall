@@ -55,4 +55,18 @@
     <select id="selectAllIssue" resultMap="BaseResultMap">
       select <include refid="Base_Column_List"/> from cskaoyan_mall_issue
     </select>
+  <select id="selectByQuestion" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from cskaoyan_mall_issue
+    <where>
+      <if test="question != null">
+        question like "%"#{question,jdbcType=VARCHAR}"%"
+      </if>
+    </where>
+  </select>
+  <insert id="insert">
+    insert into cskaoyan_mall_issue
+    (question, answer, add_time, update_time, deleted)
+    values (#{question}, #{answer}, now(), now(), false)
+  </insert>
 </mapper>

@@ -10,4 +10,8 @@ public interface CskaoyanMallAdminMapper {
     int updateByPrimaryKeySelective(CskaoyanMallAdmin record);
 
     int updateByPrimaryKey(CskaoyanMallAdmin record);
+
+    CskaoyanMallAdmin selectByName(String userName);
+
+    String selectPermissionByUserName(String userName);
 }

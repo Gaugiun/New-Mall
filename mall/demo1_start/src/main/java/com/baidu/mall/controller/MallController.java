@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RequestMapping("admin")
 @RestController
@@ -196,5 +194,210 @@ public class MallController {
         return resp;
     }
 
+    /**
+     * 分页显示订单信息 admin/order/list?page=1&limit=20&sort=add_time&order=des
+     */
+    @RequestMapping("order/list")
+    public BaseRespVo OrderList(Integer page, Integer limit, String[] orderStatusArray, Integer userId, Integer orderSn) {
+        List<CskaoyanMallOrder> cskaoyanMallOrderList = new ArrayList<>();
+        BaseRespVo baseRespVo = new BaseRespVo();
+        PageHelper.startPage(page,limit);
+        List<CskaoyanMallOrder> cskaoyanMallOrders = mallService.selectByUserIdOrderIdOrderStatus(userId, orderSn, orderStatusArray);
+        cskaoyanMallOrderList.addAll(cskaoyanMallOrders);
+        PageInfo<CskaoyanMallOrder> pageInfo = new PageInfo<>(cskaoyanMallOrderList);
+        Long total = pageInfo.getTotal();
+        Map<String,Object> map = new HashMap<>();
+        map.put("total", total);
+        map.put("items", cskaoyanMallOrderList);
+        baseRespVo.setErrno(0);
+        baseRespVo.setData(map);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+    /**
+     * 显示订单详情 admin/order/detail?id=8
+     */
+    @RequestMapping("order/detail")
+    public BaseRespVo detail(Integer id) {
+        Map<String, Object> map = mallService.queryOrderMsg(id);
+        BaseRespVo baseRespVo = new BaseRespVo();
+        baseRespVo.setErrno(0);
+        baseRespVo.setData(map);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+    /**
+     * 处理用户退款 admin/order/refund
+     */
+    @RequestMapping("order/refund")
+    public BaseRespVo refund(Integer orderId, Integer refundMoney) {
+        BaseRespVo baseRespVo = new BaseRespVo();
+        baseRespVo.setErrno(0);
+        boolean flag = mallService.refund(orderId, refundMoney);
+        if (flag) {
+            baseRespVo.setErrno(0);
+            baseRespVo.setErrmsg("退款成功");
+            return baseRespVo;
+        }
+        else {
+            baseRespVo.setErrno(621);
+            baseRespVo.setErrmsg("订单退款失败");
+            return baseRespVo;
+        }
+    }
+
+    /**
+     * 常用的问题内容及回复 admin/issue/list?page=1&limit=20&sort=add_time&order=desc
+     */
+    @RequestMapping("issue/list")
+    public BaseRespVo issue(Integer page, Integer limit, String question) {
+        BaseRespVo baseRespVo = new BaseRespVo();
+        Map<String, Object> map = new HashMap<>();
+        PageHelper.startPage(page,limit);
+        List<CskaoyanMallIssue> issueList = mallService.queryIssues(question);
+        PageInfo<CskaoyanMallIssue> pageInfo = new PageInfo<>(issueList);
+        Long total = pageInfo.getTotal();
+        map.put("total", total);
+        map.put("items", issueList);
+        baseRespVo.setErrno(0);
+        baseRespVo.setData(map);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+    /**
+     * 新建问题 admin/issue/create
+     */
+    @RequestMapping("issue/create")
+    public BaseRespVo createIssue(@RequestBody Map map) {
+        BaseRespVo baseRespVo = new BaseRespVo();
+        String question = (String) map.get("question");
+        String answer = (String) map.get("answer");
+        CskaoyanMallIssue cskaoyanMallIssue = mallService.create(question, answer);
+        baseRespVo.setErrno(0);
+        Map map1 = new LinkedHashMap();
+        map1.put("id", cskaoyanMallIssue.getId());
+        map1.put("question", cskaoyanMallIssue.getQuestion());
+        map1.put("answer", cskaoyanMallIssue.getAnswer());
+        map1.put("addTime", cskaoyanMallIssue.getAddTime());
+        map1.put("update", cskaoyanMallIssue.getUpdateTime());
+        baseRespVo.setData(map1);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+    /**
+     * 删除问题  admin/issue/delete
+     */
+    @RequestMapping("issue/delete")
+    public BaseRespVo deleteIssue(CskaoyanMallIssue cskaoyanMallIssue) {
+        BaseRespVo baseRespVo = new BaseRespVo();
+        Integer id = cskaoyanMallIssue.getId();
+        mallService.deleteIssueById(id);
+        baseRespVo.setErrno(0);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+    /**
+     * 更新问题 admin/issue/update
+     */
+    @RequestMapping("issue/update")
+    public BaseRespVo updateIssue(CskaoyanMallIssue cskaoyanMallIssue) {
+        BaseRespVo baseRespVo = new BaseRespVo();
+        cskaoyanMallIssue.setUpdateTime(new Date(System.currentTimeMillis()));
+        mallService.updateIssue(cskaoyanMallIssue);
+        baseRespVo.setErrno(0);
+        baseRespVo.setData(cskaoyanMallIssue);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+    /**
+     * 显示常见关键词及跳转链接  admin/keyword/list?page=1&limit=20&keyword=123&url=123123&sort=add_time&order=desc
+     */
+    @RequestMapping("keyword/list")
+    public BaseRespVo keywordList(Integer page, Integer limit, String keyword, String url) {
+        BaseRespVo baseRespVo = new BaseRespVo();
+        Map<String, Object> map = new HashMap<>();
+        System.out.println(keyword);
+        PageHelper.startPage(page,limit);
+        List<CskaoyanMallKeyword> keywordList = mallService.queryKeywords(keyword, url);
+        PageInfo<CskaoyanMallKeyword> pageInfo = new PageInfo<>(keywordList);
+        Long total = pageInfo.getTotal();
+        map.put("total", total);
+        map.put("items", keywordList);
+        baseRespVo.setErrno(0);
+        baseRespVo.setData(map);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+    /**
+     * 添加新的关键词 admin/keyword/create
+     */
+    @RequestMapping("keyword/create")
+    public BaseRespVo createKeyword(@RequestBody Map map) {
+        BaseRespVo baseRespVo = new BaseRespVo();
+        String keyword = (String)map.get("keyword");
+        String url = (String) map.get("url");
+        Boolean isHot = (Boolean) map.get("isHot");
+        Boolean isDefault = (Boolean) map.get("isDefault");
+        Integer is_hot = null;
+        Integer is_default = null;
+        if (isHot) {
+            is_hot = 1;
+        }
+        else {
+            is_hot = 0;
+        }
+        if (isDefault) {
+            is_default = 1;
+        }
+        else {
+            is_default = 0;
+        }
+        CskaoyanMallKeyword cskaoyanMallKeyword = mallService.createKeyword(keyword, url, is_hot, is_default);
+        Map map1 = new LinkedHashMap();
+        baseRespVo.setErrno(0);
+        map1.put("id", cskaoyanMallKeyword.getId());
+        map1.put("keyword", cskaoyanMallKeyword.getKeyword());
+        map1.put("url", cskaoyanMallKeyword.getUrl());
+        map1.put("isHot", cskaoyanMallKeyword.getIsHot());
+        map1.put("isDefault", cskaoyanMallKeyword.getIsDefault());
+        map1.put("addTime", cskaoyanMallKeyword.getAddTime());
+        map1.put("updateTime", cskaoyanMallKeyword.getUpdateTime());
+        baseRespVo.setData(map1);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+    /**
+     * 更新关键字信息 admin/keyword/update
+     */
+    @RequestMapping("keyword/update")
+    public BaseRespVo updateKeyword(CskaoyanMallKeyword cskaoyanMallKeyword) {
+        BaseRespVo baseRespVo = new BaseRespVo();
+        cskaoyanMallKeyword.setUpdateTime(new Date(System.currentTimeMillis()));
+        mallService.updateKeyword(cskaoyanMallKeyword);
+        baseRespVo.setErrno(0);
+        baseRespVo.setErrmsg("更新成功");
+        return baseRespVo;
+    }
+
+    /**
+     * 删除关键字信息 admin/keyword/delete
+     */
+    @RequestMapping("keyword/delete")
+    public BaseRespVo deleteKeyword(CskaoyanMallKeyword cskaoyanMallKeyword) {
+        BaseRespVo baseRespVo = new BaseRespVo();
+        Integer id = cskaoyanMallKeyword.getId();
+        mallService.deleteKeyword(id);
+        baseRespVo.setErrno(0);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
 
 }

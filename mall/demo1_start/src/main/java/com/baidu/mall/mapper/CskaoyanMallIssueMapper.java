@@ -14,4 +14,8 @@ public interface CskaoyanMallIssueMapper {
     int updateByPrimaryKey(CskaoyanMallIssue record);
 
     List<CskaoyanMallIssue> selectAllIssue();
+
+    List<CskaoyanMallIssue> selectByQuestion(String question);
+
+    int insert(String question, String answer);
 }

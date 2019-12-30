@@ -1,7 +1,9 @@
 package com.baidu.mall.controller;
 
 import com.baidu.mall.bean.BaseRespVo;
+import com.baidu.mall.bean.CskaoyanMallRole;
 import com.baidu.mall.bean.CskaoyanMallStorage;
+import com.baidu.mall.service.SystemCharacterServiceImp;
 import com.baidu.mall.service.SystemStorageServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -9,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.util.ResourceUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -92,5 +95,57 @@ public class SystemController {
         return resp;
     }
 
+
+    @Autowired
+    SystemCharacterServiceImp systemCharacterServiceImp;
+
+    /**
+     * @return baseRespVo
+     * 查找所有的管理员数据，并统计其总数，返回给response
+     */
+    @RequestMapping("role/list")
+    public BaseRespVo<Object> roleStatics(int page, int limit, String name, String sort, String order){
+        PageHelper.startPage(page,limit);
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        List<CskaoyanMallRole> cskaoyanMallRoleList = systemCharacterServiceImp.queryCharacter(name);
+        PageInfo<CskaoyanMallRole> rolesPageInfo = new PageInfo<>(cskaoyanMallRoleList);
+        Map<String, Object> map = new HashMap<>();
+        map.put("items", cskaoyanMallRoleList);
+        map.put("total", rolesPageInfo.getTotal());
+        baseRespVo.setErrno(0);
+        baseRespVo.setData(map);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+    @RequestMapping("role/create")
+    public BaseRespVo<Object> addRole(@RequestBody Map<String, String> json) {
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        String name = json.get("name");
+        String desc = (json.get("desc"));
+        CskaoyanMallRole cskaoyanMallRole = systemCharacterServiceImp.addRole(name, desc);
+        baseRespVo.setErrno(0);
+        baseRespVo.setData(cskaoyanMallRole);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+    @RequestMapping("role/update")
+    public BaseRespVo<Object> updateRole(@RequestBody CskaoyanMallRole cskaoyanMallRole) {
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        systemCharacterServiceImp.updateRole(cskaoyanMallRole);
+        baseRespVo.setErrmsg("成功");
+        baseRespVo.setErrno(0);
+        return baseRespVo;
+    }
+
+    @RequestMapping("role/delete")
+    public BaseRespVo<Object> deleteRole(@RequestBody CskaoyanMallRole cskaoyanMallRole) {
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        systemCharacterServiceImp.deleteRole(cskaoyanMallRole.getId());
+        baseRespVo.setErrno(0);
+        baseRespVo.setErrmsg("成功");
+        return  baseRespVo;
+    }
 
 }

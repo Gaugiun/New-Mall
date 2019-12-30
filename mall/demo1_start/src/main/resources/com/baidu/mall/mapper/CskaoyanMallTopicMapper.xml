@@ -9,7 +9,7 @@
     <result column="read_count" jdbcType="VARCHAR" property="readCount" />
     <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
     <result column="sort_order" jdbcType="INTEGER" property="sortOrder" />
-    <result column="goods" jdbcType="VARCHAR" property="goods" />
+    <result column="goods" jdbcType="VARCHAR" property="goods" typeHandler="com.baidu.mall.typehandler.List2StringTypeHandler"/>
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
@@ -18,14 +18,14 @@
     <result column="content" jdbcType="LONGVARCHAR" property="content" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, title, subtitle, price, read_count, pic_url, sort_order, goods, add_time, update_time, 
+    id, title, subtitle, price, read_count, pic_url, sort_order, goods, add_time, update_time,
     deleted
   </sql>
   <sql id="Blob_Column_List">
     content
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
@@ -104,4 +104,42 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <select id="selectFuzzy" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      ,
+      <include refid="Blob_Column_List" />
+      from cskaoyan_mall_topic
+    <where>
+      <if test="title != null">
+        <bind name="title" value="'%' + title + '%'"/>
+        title like #{title}
+      </if>
+      <if test="subtitle != null ">
+        <bind name="subtitle" value="'%' + subtitle + '%'"/>
+        and subtitle like #{subtitle}
+      </if>
+    </where>
+    </select>
+  <insert id="insert" parameterType="com.baidu.mall.bean.CskaoyanMallTopic">
+    insert into cskaoyan_mall_topic
+    (<include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />) values
+    (null,
+    #{title,jdbcType=VARCHAR},
+    #{subtitle,jdbcType=VARCHAR},
+    #{price,jdbcType=DECIMAL},
+    #{readCount,jdbcType=VARCHAR},
+    #{picUrl,jdbcType=VARCHAR},
+    #{sortOrder,jdbcType=INTEGER},
+    #{goods,jdbcType=VARCHAR},
+    #{addTime,jdbcType=TIMESTAMP},
+    #{updateTime,jdbcType=TIMESTAMP},
+    #{deleted,jdbcType=BIT},
+    #{content,jdbcType=LONGVARCHAR})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
 </mapper>

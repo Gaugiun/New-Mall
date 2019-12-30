@@ -1,6 +1,9 @@
 package com.baidu.mall.mapper;
 
 import com.baidu.mall.bean.CskaoyanMallOrderGoods;
+import com.baidu.mall.bean.StatisticsGoodsRow;
+
+import java.util.List;
 
 public interface CskaoyanMallOrderGoodsMapper {
     int deleteByPrimaryKey(Integer id);
@@ -10,4 +13,10 @@ public interface CskaoyanMallOrderGoodsMapper {
     int updateByPrimaryKeySelective(CskaoyanMallOrderGoods record);
 
     int updateByPrimaryKey(CskaoyanMallOrderGoods record);
+
+    CskaoyanMallOrderGoods selectByOrderId(Integer orderId);
+
+    List<CskaoyanMallOrderGoods> selectById(Integer id);
+
+    List<StatisticsGoodsRow> selectAll();
 }
