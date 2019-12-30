@@ -10,4 +10,6 @@ public interface CskaoyanMallUserFormidMapper {
     int updateByPrimaryKeySelective(CskaoyanMallUserFormid record);
 
     int updateByPrimaryKey(CskaoyanMallUserFormid record);
+
+    int updateUseAmountById(Integer id, Integer useamount);
 }

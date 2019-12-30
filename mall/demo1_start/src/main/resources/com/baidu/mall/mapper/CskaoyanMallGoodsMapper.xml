@@ -169,4 +169,21 @@
         category_id = #{categoryId,jdbcType=INTEGER}
       </where>
     </select>
+  <select id="selectNewGoods" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from cskaoyan_mall_goods
+    where is_new = 1;
+  </select>
+  <select id="selectHotGoods" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from cskaoyan_mall_goods
+    where is_hot = 1;
+  </select>
+  <select id="countGoods" resultType="int">
+    select count(id) from cskaoyan_mall_goods
+  </select>
+  <select id="selectShareUrlById" resultType="java.lang.String">
+    select share_url from cskaoyan_mall_goods where id = #{id}
+  </select>
+  <select id="selectGoodsListByCategoryId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from cskaoyan_mall_goods where categor_id = #{categoryId}
+  </select>
 </mapper>

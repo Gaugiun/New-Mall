@@ -1,17 +1,14 @@
 package com.baidu.mall.service;
 
-import com.baidu.mall.bean.CskaoyanMallBrand;
-import com.baidu.mall.bean.CskaoyanMallCategory;
-import com.baidu.mall.bean.CskaoyanMallCategoryByLevel;
-import com.baidu.mall.bean.CskaoyanMallRegion;
-import com.baidu.mall.mapper.CskaoyanMallBrandMapper;
-import com.baidu.mall.mapper.CskaoyanMallCategoryMapper;
-import com.baidu.mall.mapper.CskaoyanMallRegionMapper;
+import com.baidu.mall.bean.*;
+import com.baidu.mall.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MallServiceImpl implements MallService{
@@ -106,5 +103,116 @@ public class MallServiceImpl implements MallService{
             region.setChildren(selectRegionByPId(id));
         }
         return regions;
+    }
+
+    @Autowired
+    CskaoyanMallOrderMapper cskaoyanMallOrderMapper;
+
+    @Autowired
+    CskaoyanMallUserMapper cskaoyanMallUserMapper;
+
+    @Autowired
+    CskaoyanMallOrderGoodsMapper cskaoyanMallOrderGoodsMapper;
+
+    @Autowired
+    CskaoyanMallUserFormidMapper cskaoyanMallUserFormidMapper;
+
+    @Autowired
+    CskaoyanMallIssueMapper cskaoyanMallIssueMapper;
+
+    @Autowired
+    CskaoyanMallKeywordMapper cskaoyanMallKeywordMapper;
+
+    @Override
+    public List<CskaoyanMallOrder> selectByUserIdOrderIdOrderStatus(Integer userId, Integer id, String[] orderStatus) {
+        if (orderStatus != null) {
+            Integer[] statuses = new Integer[orderStatus.length];
+            for (int i = 0; i < orderStatus.length; i++) {
+                Integer integer = Integer.valueOf(orderStatus[i]);
+                statuses[i] = integer;
+            }
+            return cskaoyanMallOrderMapper.selectByUserIdOrderIdOrderStatus(userId, id, statuses);
+        }
+        return cskaoyanMallOrderMapper.selectByUserIdOrderId(userId, id);
+
+    }
+
+    @Override
+    public Map<String, Object> queryOrderMsg(Integer id) {
+        Map<String, Object> map = new LinkedHashMap<>();
+        List<CskaoyanMallOrderGoods> cskaoyanMallOrderGoods = cskaoyanMallOrderGoodsMapper.selectById(id);
+        Integer orderId = cskaoyanMallOrderGoods.get(0).getOrderId();
+
+        CskaoyanMallOrder cskaoyanMallOrder = cskaoyanMallOrderMapper.selectByOrderId(orderId);
+        Integer userId = cskaoyanMallOrder.getUserId();
+        CskaoyanMallUser cskaoyanMallUser = cskaoyanMallUserMapper.selectByPrimaryKey(userId);
+        map.put("orderGoods", cskaoyanMallOrderGoods);
+        map.put("user", cskaoyanMallUser);
+        map.put("order", cskaoyanMallOrder);
+        return map;
+    }
+
+    @Override
+    @Transactional
+    public boolean refund(Integer orderId, Integer refundMoney) {
+        CskaoyanMallOrder cskaoyanMallOrder = cskaoyanMallOrderMapper.selectByPrimaryKey(orderId);
+        Integer userFormidId = cskaoyanMallOrder.getUserId();
+        int i = cskaoyanMallUserFormidMapper.updateUseAmountById(userFormidId, refundMoney);
+        if (i > 0) {
+            cskaoyanMallOrderMapper.updateOrderStatusById(orderId);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<CskaoyanMallIssue> queryIssues(String question) {
+        return cskaoyanMallIssueMapper.selectByQuestion(question);
+    }
+
+    @Override
+    @Transactional
+    public CskaoyanMallIssue create(String question, String answer) {
+        java.sql.Date date = new java.sql.Date(System.currentTimeMillis());
+        cskaoyanMallIssueMapper.insert(question, answer);
+        List<CskaoyanMallIssue> issueList = cskaoyanMallIssueMapper.selectByQuestion(question);
+        return issueList.get(0);
+    }
+
+    @Override
+    @Transactional
+    public boolean deleteIssueById(Integer id) {
+        int delete = cskaoyanMallIssueMapper.deleteByPrimaryKey(id);
+        if (delete > 0) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    @Transactional
+    public void updateIssue(CskaoyanMallIssue cskaoyanMallIssue) {
+        cskaoyanMallIssueMapper.updateByPrimaryKeySelective(cskaoyanMallIssue);
+    }
+
+    @Override
+    public List<CskaoyanMallKeyword> queryKeywords(String keyword, String url) {
+        return cskaoyanMallKeywordMapper.selectByKeywordUrl(keyword, url);
+    }
+
+    @Override
+    public CskaoyanMallKeyword createKeyword(String keyword, String url, Integer isHot, Integer isDefault) {
+        cskaoyanMallKeywordMapper.insert(keyword, url, isHot, isDefault);
+        return cskaoyanMallKeywordMapper.selectByKeywordUrl(keyword , url).get(0);
+    }
+
+    @Override
+    public void updateKeyword(CskaoyanMallKeyword cskaoyanMallKeyword) {
+        cskaoyanMallKeywordMapper.updateByPrimaryKeySelective(cskaoyanMallKeyword);
+    }
+
+    @Override
+    public void deleteKeyword(Integer id) {
+        cskaoyanMallKeywordMapper.deleteByPrimaryKey(id);
     }
 }

@@ -2,6 +2,7 @@ package com.baidu.mall.mapper;
 
 import com.baidu.mall.bean.CskaoyanMallCategory;
 import com.baidu.mall.bean.CskaoyanMallCategoryByLevel;
+import com.baidu.mall.bean.CskaoyanMallCategoryToIdNameIconUrl;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,4 +33,8 @@ public interface CskaoyanMallCategoryMapper {
     List<CskaoyanMallCategory> select();
 
     List<CskaoyanMallCategory> selectByPidAndLevel(@Param("pid") Integer pid);
+
+    List<CskaoyanMallCategoryToIdNameIconUrl> selectCategoryForIdNameIconUrl();
+
+    List<CskaoyanMallCategory> selectFilterCategoryListByCategoryId(Integer categoryId);
 }

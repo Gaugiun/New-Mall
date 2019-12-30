@@ -320,4 +320,7 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <select id="selectAd" resultType="com.baidu.mall.bean.CskaoyanMallAd">
+      select <include refid="Base_Column_List"/> from cskaoyan_mall_ad
+    </select>
 </mapper>

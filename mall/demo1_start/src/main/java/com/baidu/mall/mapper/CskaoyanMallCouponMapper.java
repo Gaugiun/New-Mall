@@ -1,11 +1,15 @@
 package com.baidu.mall.mapper;
 
 import com.baidu.mall.bean.CskaoyanMallCoupon;
+import org.apache.ibatis.annotations.Mapper;
 import com.baidu.mall.bean.CskaoyanMallCouponExample;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+import java.util.List;
+
+@Mapper
 public interface CskaoyanMallCouponMapper {
     long countByExample(CskaoyanMallCouponExample example);
 
@@ -28,6 +32,8 @@ public interface CskaoyanMallCouponMapper {
     int updateByPrimaryKeySelective(CskaoyanMallCoupon record);
 
     int updateByPrimaryKey(CskaoyanMallCoupon record);
+
+    List<CskaoyanMallCoupon> selectCoupon();
 
     CskaoyanMallCoupon selectById(@Param("id") Integer id);
 }

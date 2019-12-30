@@ -26,4 +26,6 @@ public interface CskaoyanMallBrandMapper {
     boolean updateBrand(CskaoyanMallBrand cskaoyanMallBrand);
 
     List<CskaoyanMallBrand> selectAllBrand();
+
+    CskaoyanMallBrand selectBrandByGoodsId(Integer id);
 }

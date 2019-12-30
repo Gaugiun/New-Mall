@@ -2,6 +2,8 @@ package com.baidu.mall.mapper;
 
 import com.baidu.mall.bean.CskaoyanMallAddress;
 import com.baidu.mall.bean.CskaoyanMallUser;
+
+import com.baidu.mall.bean.StatisticsUsersRow;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -20,4 +22,5 @@ public interface CskaoyanMallUserMapper {
     List<CskaoyanMallUser> selectAllUser(String username, String mobile);
 
     CskaoyanMallUser selectByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+    List<StatisticsUsersRow> selectDateNumble();
 }

@@ -16,7 +16,7 @@
     id, keyword, url, is_hot, is_default, sort_order, add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_keyword
     where id = #{id,jdbcType=INTEGER}
@@ -67,4 +67,25 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByKeywordUrl" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from cskaoyan_mall_keyword
+    <where>
+      <if test="keyword != null">
+        <bind name="keyword" value="'%' + keyword + '%'"/>
+        keyword like #{keyword}
+      </if>
+      <if test="url != null">
+        <bind name="url" value="'%' + url + '%'"/>
+        and  url like #{url}
+      </if>
+    </where>
+  </select>
+  <insert id="insert">
+    insert into cskaoyan_mall_keyword
+    (keyword, url, is_hot, is_default, sort_order, add_time, update_time, deleted)
+    values (#{keyword}, #{url},
+    #{isHot}, #{isDefault},
+    100, now(), now(), false)
+  </insert>
 </mapper>

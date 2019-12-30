@@ -30,13 +30,13 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, order_sn, order_status, consignee, mobile, address, message, goods_price, 
-    freight_price, coupon_price, integral_price, groupon_price, order_price, actual_price, 
-    pay_id, pay_time, ship_sn, ship_channel, ship_time, confirm_time, comments, end_time, 
+    id, user_id, order_sn, order_status, consignee, mobile, address, message, goods_price,
+    freight_price, coupon_price, integral_price, groupon_price, order_price, actual_price,
+    pay_id, pay_time, ship_sn, ship_channel, ship_time, confirm_time, comments, end_time,
     add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_order
     where id = #{id,jdbcType=INTEGER}
@@ -155,4 +155,60 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectByUserIdOrderIdOrderStatus" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_order
+    <where>
+      <trim suffixOverrides="or">
+        <if test="userId != null">
+          user_id = #{userId,jdbcType=INTEGER}
+        </if>
+        <if test="id != null">
+          and id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="orderStatus != null">
+          and
+          <foreach collection="orderStatus" item="status">
+            order_status = #{status,jdbcType=SMALLINT} or
+          </foreach>
+        </if>
+      </trim>
+    </where>
+  </select>
+  <update id="updateOrderStatusById">
+    update cskaoyan_mall_order
+    set
+    order_status = #{orderStatus,jdbcType=SMALLINT}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByUserIdOrderId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from cskaoyan_mall_order
+    <where>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER}
+      </if>
+      <if test="id != null">
+        and id = #{id,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
+  <select id="selectById" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_order
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectByOrderId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_order
+    where id = #{orderId,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAll" resultType="com.baidu.mall.bean.StatisticsOrderRow">
+      select CAST(confirm_time AS CHAR(10)) AS `day`, COUNT(id) AS orders, COUNT(DISTINCT user_id) AS customers, SUM(order_price) AS amount, CAST(SUM(order_price)/COUNT(DISTINCT user_id) AS decimal(10,2)) AS pcr FROM cskaoyan_mall_order GROUP BY `day`
+  </select>
 </mapper>
