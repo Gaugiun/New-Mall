@@ -40,35 +40,35 @@ public class List2StringTypeHandler implements TypeHandler<List> {
     }
 
     /**
-     * 从数据库中取值
+     * 从数据库中取值 转换为List类型
      * @param resultSet
      * @param s
      * @return
      * @throws SQLException
      */
     @Override
-    public List<Object> getResult(ResultSet resultSet, String s) throws SQLException {
+    public List<String> getResult(ResultSet resultSet, String s) throws SQLException {
         String string = resultSet.getString(s);
         return transfer(string);
     }
 
     @Override
-    public List<Object> getResult(ResultSet resultSet, int i) throws SQLException {
+    public List<String> getResult(ResultSet resultSet, int i) throws SQLException {
         String string = resultSet.getString(i);
         return transfer(string);
     }
 
     @Override
-    public List<Object> getResult(CallableStatement callableStatement, int i) throws SQLException {
+    public List<String> getResult(CallableStatement callableStatement, int i) throws SQLException {
         String result = callableStatement.getString(i);
         return transfer(result);
     }
-    private List<Object> transfer(String string) {
+    private List<String> transfer(String string) {
         if (string.length() > 2) {
-            List<Object> list = new ArrayList(Arrays.asList(string.split(",")));
+            List<String> list = new ArrayList(Arrays.asList(string.split(",")));
             return list;
         }else {
-            List<Object>  list = new ArrayList<>();
+            List<String>  list = new ArrayList<>();
             list.add("");
             return list;
         }

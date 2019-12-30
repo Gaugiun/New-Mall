@@ -96,6 +96,29 @@
     </where>
 
   </select>
+    <select id="select" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List" /> from cskaoyan_mall_address
+      <where>
+        deleted = 0
+      </where>
+    </select>
+  <insert id="insert">
+    insert into cskaoyan_mall_address values (
+    #{cskaoyanMallAddress.id}, #{cskaoyanMallAddress.name}, #{cskaoyanMallAddress.userId},
+    #{cskaoyanMallAddress.provinceId}, #{cskaoyanMallAddress.cityId}, #{cskaoyanMallAddress.areaId},
+    #{cskaoyanMallAddress.address}, #{cskaoyanMallAddress.mobile}, #{cskaoyanMallAddress.isDefault},
+    #{cskaoyanMallAddress.addTime}, #{cskaoyanMallAddress.updateTime}, #{cskaoyanMallAddress.deleted}
+    )
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <delete id="updateDeleteById">
+    update cskaoyan_mall_address set deleted = 1
+    <where>
+      id = #{id}
+    </where>
+  </delete>
 
 
 </mapper>

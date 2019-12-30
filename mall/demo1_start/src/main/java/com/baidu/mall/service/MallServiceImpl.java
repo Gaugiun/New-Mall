@@ -21,7 +21,7 @@ public class MallServiceImpl implements MallService{
     @Transactional
     @Override
     public List<CskaoyanMallRegion> selectRegion() {
-        List<CskaoyanMallRegion> regions = selectRegionByPId(0);
+        List<CskaoyanMallRegion> regions = selectRegionByPId(0) ;
         return regions;
     }
 

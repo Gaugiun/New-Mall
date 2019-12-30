@@ -7,7 +7,7 @@
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="category_id" jdbcType="INTEGER" property="categoryId" />
     <result column="brand_id" jdbcType="INTEGER" property="brandId" />
-    <result column="gallery" jdbcType="VARCHAR" property="gallery" />
+    <result column="gallery" jdbcType="VARCHAR" property="gallery" typeHandler="com.baidu.mall.typehandler.List2StringTypeHandler"/>
     <result column="keywords" jdbcType="VARCHAR" property="keywords" />
     <result column="brief" jdbcType="VARCHAR" property="brief" />
     <result column="is_on_sale" jdbcType="BIT" property="isOnSale" />
@@ -27,15 +27,15 @@
     <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, goods_sn, name, category_id, brand_id, gallery, keywords, brief, is_on_sale, 
-    sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price, 
+    id, goods_sn, name, category_id, brand_id, gallery, keywords, brief, is_on_sale,
+    sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
     add_time, update_time, deleted
   </sql>
   <sql id="Blob_Column_List">
     detail
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
@@ -159,4 +159,14 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <select id="selectByCategoryId" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      ,
+      <include refid="Blob_Column_List" />
+      from cskaoyan_mall_goods
+      <where>
+        category_id = #{categoryId,jdbcType=INTEGER}
+      </where>
+    </select>
 </mapper>

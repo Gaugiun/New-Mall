@@ -117,5 +117,21 @@
       update_time = #{updateTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <select id="select" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from cskaoyan_mall_category
+    </select>
+  <select id="selectByPidAndLevel" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_category
+    <where>
+      level = 'L2'
+      <if test="pid != null">
+        and pid = #{pid,jdbcType=INTEGER}
+      </if>
+    </where>
+  </select>
 
 </mapper>

@@ -2,6 +2,7 @@ package com.baidu.mall.bean;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 public class CskaoyanMallGoods {
     private Integer id;
@@ -14,7 +15,7 @@ public class CskaoyanMallGoods {
 
     private Integer brandId;
 
-    private String gallery;
+    private List gallery;
 
     private String keywords;
 
@@ -86,12 +87,12 @@ public class CskaoyanMallGoods {
         this.brandId = brandId;
     }
 
-    public String getGallery() {
+    public List getGallery() {
         return gallery;
     }
 
-    public void setGallery(String gallery) {
-        this.gallery = gallery == null ? null : gallery.trim();
+    public void setGallery(List gallery) {
+        this.gallery = gallery;
     }
 
     public String getKeywords() {

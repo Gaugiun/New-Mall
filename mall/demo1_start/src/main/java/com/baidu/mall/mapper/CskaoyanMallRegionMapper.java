@@ -3,6 +3,7 @@ package com.baidu.mall.mapper;
 import com.baidu.mall.bean.CskaoyanMallBrand;
 import com.baidu.mall.bean.CskaoyanMallRegion;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface CskaoyanMallRegionMapper {
     List<CskaoyanMallRegion> selectRegionByType(Integer typeId);
 
     List<CskaoyanMallRegion> selectRegionByPId(Integer pid);
+
+    List<CskaoyanMallRegion> selectByPid(@Param("pid") Integer pid);
 }

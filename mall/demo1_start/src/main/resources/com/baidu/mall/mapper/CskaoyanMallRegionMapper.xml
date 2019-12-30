@@ -63,4 +63,12 @@
       </if>
     </where>
   </select>
+  <select id="selectByPid" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from cskaoyan_mall_region
+    <where>
+      <if test="pid != null">
+        pid = #{pid}
+      </if>
+    </where>
+  </select>
 </mapper>

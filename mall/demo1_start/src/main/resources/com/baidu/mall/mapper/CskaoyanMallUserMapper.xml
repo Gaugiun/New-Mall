@@ -114,7 +114,14 @@
       </if>
     </where>
   </select>
-
+    <select id="selectByUsernameAndPassword" resultMap="BaseResultMap">
+      select
+      <include refid="Base_Column_List" />
+      from cskaoyan_mall_user
+      <where>
+        username = #{username} and password = #{password}
+      </where>
+    </select>
 
 
 </mapper>
