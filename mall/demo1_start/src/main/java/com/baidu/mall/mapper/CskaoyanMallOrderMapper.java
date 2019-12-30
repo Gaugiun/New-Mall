@@ -1,6 +1,7 @@
 package com.baidu.mall.mapper;
 
 import com.baidu.mall.bean.CskaoyanMallOrder;
+import com.baidu.mall.bean.StatisticsOrderRow;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -23,4 +24,6 @@ public interface CskaoyanMallOrderMapper {
     List<CskaoyanMallOrder> selectById(Integer id);
 
     CskaoyanMallOrder selectByOrderId(Integer orderId);
+
+    List<StatisticsOrderRow> selectAll();
 }

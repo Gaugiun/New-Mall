@@ -1,6 +1,7 @@
 package com.baidu.mall.mapper;
 
 import com.baidu.mall.bean.CskaoyanMallOrderGoods;
+import com.baidu.mall.bean.StatisticsGoodsRow;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface CskaoyanMallOrderGoodsMapper {
     CskaoyanMallOrderGoods selectByOrderId(Integer orderId);
 
     List<CskaoyanMallOrderGoods> selectById(Integer id);
+
+    List<StatisticsGoodsRow> selectAll();
 }

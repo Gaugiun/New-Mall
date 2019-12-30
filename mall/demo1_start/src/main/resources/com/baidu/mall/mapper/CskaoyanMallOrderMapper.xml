@@ -207,4 +207,8 @@
     from cskaoyan_mall_order
     where id = #{orderId,jdbcType=INTEGER}
   </select>
+
+  <select id="selectAll" resultType="com.baidu.mall.bean.StatisticsOrderRow">
+      select CAST(confirm_time AS CHAR(10)) AS `day`, COUNT(id) AS orders, COUNT(DISTINCT user_id) AS customers, SUM(order_price) AS amount, CAST(SUM(order_price)/COUNT(DISTINCT user_id) AS decimal(10,2)) AS pcr FROM cskaoyan_mall_order GROUP BY `day`
+  </select>
 </mapper>

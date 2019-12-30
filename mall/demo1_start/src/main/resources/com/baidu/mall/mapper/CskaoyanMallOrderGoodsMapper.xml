@@ -108,4 +108,8 @@
     from cskaoyan_mall_order_goods
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="selectAll" resultType="com.baidu.mall.bean.StatisticsGoodsRow">
+    SELECT SUM(order_id) AS orders, SUM(price) AS amount, SUM(number) AS products, CAST(add_time AS CHAR(10)) AS `day` FROM cskaoyan_mall_order_goods GROUP BY `day`
+  </select>
 </mapper>
