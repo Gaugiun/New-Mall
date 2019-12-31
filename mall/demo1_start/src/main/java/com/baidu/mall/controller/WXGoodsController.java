@@ -4,6 +4,7 @@ import com.baidu.mall.bean.BaseRespVo;
 import com.baidu.mall.bean.BaseWxGoodsListVo;
 import com.baidu.mall.bean.BaseWxGoodsVo;
 import com.baidu.mall.bean.CskaoyanMallGoods;
+import com.baidu.mall.service.WXCatalogServiceImpl;
 import com.baidu.mall.service.WxGoodsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RequestMapping("wx")
@@ -19,6 +21,8 @@ public class WXGoodsController {
 
     @Autowired
     WxGoodsServiceImpl wxGoodsService;
+    @Autowired
+    WXCatalogServiceImpl wxCatalogService;
 
     /**
      * 商品详情
@@ -60,5 +64,20 @@ public class WXGoodsController {
         resp.setErrmsg("成功");
 
         return resp;
+    }
+
+    /**
+     * 点击二级目录后显示该目录及其兄弟目录
+     * @param id
+     * @return
+     */
+    @RequestMapping("goods/category")
+    public BaseRespVo categoryIndex(Integer id){
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        HashMap hashMap = wxCatalogService.categoryIndex(id);
+        baseRespVo.setData(hashMap);
+        baseRespVo.setErrno(0);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
     }
 }

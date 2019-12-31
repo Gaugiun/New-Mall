@@ -73,21 +73,6 @@ public class WXCatalogController {
     }
 
     /**
-     * 点击二级目录后显示该目录及其兄弟目录
-     * @param id
-     * @return
-     */
-    @RequestMapping("goods/category")
-    public BaseRespVo categoryIndex(Integer id){
-        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
-        HashMap hashMap = wxCatalogService.categoryIndex(id);
-        baseRespVo.setData(hashMap);
-        baseRespVo.setErrno(0);
-        baseRespVo.setErrmsg("成功");
-        return baseRespVo;
-    }
-
-    /**
      * 显示该二级目录（商品分类）下的所有商品
      * @param categoryId
      * @param page
