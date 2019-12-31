@@ -29,7 +29,7 @@ public class WxIndexServiceImpl implements WxIndexService {
     public BaseWxIndexVo selectIndex(BaseWxIndexVo baseWxIndexVo) {
         baseWxIndexVo.setNewGoodsList(cskaoyanMallGoodsMapper.selectNewGoods());
         baseWxIndexVo.setCouponList(cskaoyanMallCouponMapper.selectCoupon());
-        baseWxIndexVo.setChannel(cskaoyanMallCategoryMapper.selectCategoryForIdNameIconUrl());
+        baseWxIndexVo.setChannel(cskaoyanMallCategoryMapper.selectCategoryLevel1ForIdNameIconUrl());
         baseWxIndexVo.setBanner(cskaoyanMallAdMapper.selectAd());
         baseWxIndexVo.setBrandList(cskaoyanMallBrandMapper.selectAllBrand());
         baseWxIndexVo.setHotGoodsList(cskaoyanMallGoodsMapper.selectHotGoods());

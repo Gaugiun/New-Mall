@@ -44,7 +44,7 @@ public class WXCatalogController {
      * 搜索框默认显示一共多少商品
      * @return
      */
-    @RequestMapping("goods/count")
+/*    @RequestMapping("goods/count")
     public BaseRespVo count(){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
         Integer goodsCount = wxCatalogService.count();
@@ -54,7 +54,7 @@ public class WXCatalogController {
         baseRespVo.setErrno(0);
         baseRespVo.setErrmsg("成功");
         return baseRespVo;
-    }
+    }*/
 
 
     /**
@@ -94,7 +94,7 @@ public class WXCatalogController {
      * @param size
      * @return
      */
-    @RequestMapping("goods/list")
+/*    @RequestMapping("goods/list")
     public BaseRespVo goodsList(Integer categoryId, Integer page, Integer size){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
         PageHelper.startPage(page, size);
@@ -108,7 +108,7 @@ public class WXCatalogController {
         baseRespVo.setErrno(0);
         baseRespVo.setErrmsg("成功");
         return baseRespVo;
-    }
+    }*/
 
     /**
      * 登录

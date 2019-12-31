@@ -17,14 +17,8 @@ import java.util.List;
 @SpringBootTest
 public class MyTest {
 
-    @Autowired
-    CskaoyanMallBrandMapper selectBrandByGoodsId;
-
     @Test
     public void mytest(){
-        CskaoyanMallBrand cskaoyanMallBrand = selectBrandByGoodsId.selectBrandByGoodsId(1055016);
-        String s = cskaoyanMallBrand.toString();
-        System.out.println(s);
 
     }
 }
