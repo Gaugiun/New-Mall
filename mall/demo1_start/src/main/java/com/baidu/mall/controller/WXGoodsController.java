@@ -36,7 +36,6 @@ public class WXGoodsController {
 
         return resp;
     }
-
     @RequestMapping("goods/list")
     public BaseRespVo GoodsList(@RequestParam("brandId") Integer brandId,@RequestParam("categoryId") Integer categoryId,
                                 @RequestParam("page") Integer page,@RequestParam("size") Integer size){
@@ -52,7 +51,6 @@ public class WXGoodsController {
             baseWxGoodsListVo.setCount(cskaoyanMallGoods.size());
             baseWxGoodsListVo.setFilterCategoryList(wxGoodsService.selectFilterCategoryListByCategoryId(categoryId));
         }
-
 
         BaseRespVo resp = new BaseRespVo();
         resp.setData(baseWxGoodsListVo);

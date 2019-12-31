@@ -26,7 +26,8 @@ public class WXCatalogServiceImpl implements WXCatalogService {
     CskaoyanMallAddressMapper cskaoyanMallAddressMapper;
     @Autowired
     CskaoyanMallRegionMapper cskaoyanMallRegionMapper;
-
+    @Autowired
+    CskaoyanMallFeedbackMapper cskaoyanMallFeedbackMapper;
 
     //表示数据库中的总共的商品数量  李雅雯已写 等会可以删除
     private Integer goodsCount;
@@ -173,5 +174,24 @@ public class WXCatalogServiceImpl implements WXCatalogService {
     public List<CskaoyanMallRegion> regionList(Integer pid) {
         List<CskaoyanMallRegion> cskaoyanMallRegions = cskaoyanMallRegionMapper.selectByPid(pid);
         return cskaoyanMallRegions;
+    }
+
+    @Override
+    public boolean feedbackSubmit(Integer userId, CskaoyanMallFeedback cskaoyanMallFeedback) {
+        CskaoyanMallUser cskaoyanMallUser = cskaoyanMallUserMapper.selectByPrimaryKey(userId);
+        long l = System.currentTimeMillis();
+        Date date = new Date(l);
+        cskaoyanMallFeedback.setAddTime(date);
+        cskaoyanMallFeedback.setUpdateTime(date);
+        cskaoyanMallFeedback.setUserId(userId);
+        cskaoyanMallFeedback.setUsername(cskaoyanMallUser.getUsername());
+        cskaoyanMallFeedback.setId(null);
+        cskaoyanMallFeedback.setStatus(0);
+        cskaoyanMallFeedback.setDeleted(false);
+        if (cskaoyanMallFeedback.getHasPicture() == false){
+            cskaoyanMallFeedback.setPicUrls(null);
+        }
+        boolean b =  cskaoyanMallFeedbackMapper.insert(cskaoyanMallFeedback);
+        return false;
     }
 }

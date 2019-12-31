@@ -1,6 +1,7 @@
 package com.baidu.mall.bean;
 
 import java.sql.Date;
+import java.util.List;
 
 public class CskaoyanMallFeedback {
     private Integer id;
@@ -19,7 +20,7 @@ public class CskaoyanMallFeedback {
 
     private Boolean hasPicture;
 
-    private String picUrls;
+    private List picUrls;
 
     private Date addTime;
 
@@ -91,12 +92,12 @@ public class CskaoyanMallFeedback {
         this.hasPicture = hasPicture;
     }
 
-    public String getPicUrls() {
+    public List getPicUrls() {
         return picUrls;
     }
 
-    public void setPicUrls(String picUrls) {
-        this.picUrls = picUrls == null ? null : picUrls.trim();
+    public void setPicUrls(List picUrls) {
+        this.picUrls = picUrls;
     }
 
     public Date getAddTime() {

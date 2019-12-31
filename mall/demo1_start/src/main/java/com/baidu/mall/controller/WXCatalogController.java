@@ -1,8 +1,6 @@
 package com.baidu.mall.controller;
 
 import com.baidu.mall.bean.*;
-import com.baidu.mall.service.MallService;
-import com.baidu.mall.service.MallServiceImpl;
 import com.baidu.mall.service.WXCatalogService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -20,8 +18,11 @@ import java.util.List;
 @RestController
 @RequestMapping("wx")
 public class WXCatalogController {
-    //这里定义一个 userId 用于API：coupon/receive 领取优惠券时查询是否已经领取过优惠券
+    //这里定义一个 userId 用于API
     private Integer userId;
+
+/*    @Autowired
+    HttpServletRequest request;*/
 
     @Autowired
     WXCatalogService wxCatalogService;
@@ -40,10 +41,10 @@ public class WXCatalogController {
         return baseRespVo;
     }
 
-    /**
+/*    *//**
      * 搜索框默认显示一共多少商品
      * @return
-     */
+     *//*
     @RequestMapping("goods/count")
     public BaseRespVo count(){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
@@ -54,7 +55,7 @@ public class WXCatalogController {
         baseRespVo.setErrno(0);
         baseRespVo.setErrmsg("成功");
         return baseRespVo;
-    }
+    }*/
 
 
     /**
@@ -87,13 +88,13 @@ public class WXCatalogController {
         return baseRespVo;
     }
 
-    /**
+/*    *//**
      * 显示该二级目录（商品分类）下的所有商品
      * @param categoryId
      * @param page
      * @param size
      * @return
-     */
+     *//*
     @RequestMapping("goods/list")
     public BaseRespVo goodsList(Integer categoryId, Integer page, Integer size){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
@@ -108,7 +109,7 @@ public class WXCatalogController {
         baseRespVo.setErrno(0);
         baseRespVo.setErrmsg("成功");
         return baseRespVo;
-    }
+    }*/
 
     /**
      * 登录
@@ -123,6 +124,9 @@ public class WXCatalogController {
         CskaoyanMallUser cskaoyanMallUser = wxCatalogService.authLogin(username, password);
 
         userId = cskaoyanMallUser.getId();
+
+       // request.getSession().setAttribute("userId", cskaoyanMallUser.getId());
+
 
         HashMap data = new HashMap();
         HashMap userInfo = new HashMap();
@@ -288,4 +292,19 @@ public class WXCatalogController {
         }
         return baseRespVo;
     }
+
+    @RequestMapping("feedback/submit")
+    public BaseRespVo feedbackSubmit(@RequestBody CskaoyanMallFeedback cskaoyanMallFeedback){
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        boolean b = wxCatalogService.feedbackSubmit(userId, cskaoyanMallFeedback);
+        if (b){
+            baseRespVo.setErrno(0);
+            baseRespVo.setErrmsg("成功");
+            return baseRespVo;
+        }
+        return baseRespVo;
+    }
+
+
+
 }

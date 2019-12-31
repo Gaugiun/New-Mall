@@ -34,4 +34,6 @@ public interface WXCatalogService {
     boolean addressDelete(Integer id);
 
     List<CskaoyanMallRegion> regionList(Integer pid);
+
+    boolean feedbackSubmit(Integer userId, CskaoyanMallFeedback cskaoyanMallFeedback);
 }
