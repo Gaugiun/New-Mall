@@ -1,15 +1,14 @@
 package com.baidu.mall.controller;
 
-import com.baidu.mall.bean.BaseRespVo;
-import com.baidu.mall.bean.CskaoyanMallRole;
-import com.baidu.mall.bean.CskaoyanMallStorage;
+import com.baidu.mall.bean.*;
+import com.baidu.mall.mapper.CskaoyanMallLogMapper;
+import com.baidu.mall.service.CskaoyanMallLogService;
+import com.baidu.mall.service.SystemAdminService;
 import com.baidu.mall.service.SystemCharacterServiceImp;
 import com.baidu.mall.service.SystemStorageServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.Resource;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,10 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,7 +40,7 @@ public class SystemController {
     SystemStorageServiceImpl systemStorageServiceImpl;
 
     @RequestMapping("storage/list")
-    public BaseRespVo UserList(Integer page,Integer limit,Integer key,String name){
+    public BaseRespVo UserList(Integer page,Integer limit,String key,String name){
         PageHelper.startPage(page,limit);
         List<CskaoyanMallStorage> storages = systemStorageServiceImpl.selectStorage(key,name);
         PageInfo<CskaoyanMallStorage> storagePageInfo = new PageInfo<>(storages);
@@ -148,4 +144,80 @@ public class SystemController {
         return  baseRespVo;
     }
 
+    @Autowired
+    SystemAdminService systemAdminService;
+
+    @RequestMapping("admin/list")
+    public BaseRespVo<Object> listAdmins(int page, int limit, String username, String Sort, String order){
+        PageHelper.startPage(page, limit);
+        List<CskaoyanMallAdmin> cskaoyanMallAdminList = systemAdminService.listAllAdmin(username);
+        PageInfo<CskaoyanMallAdmin> adminPageInfo = new PageInfo<>(cskaoyanMallAdminList);
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        baseRespVo.setErrmsg("成功");
+        baseRespVo.setErrno(0);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("total", adminPageInfo.getTotal());
+        map.put("items", cskaoyanMallAdminList);
+        baseRespVo.setData(map);
+        return baseRespVo;
+    }
+
+    @RequestMapping("role/options")
+    public BaseRespVo<Object> listRoles() {
+        List<SystemCharacters4Options> cskaoyanMallRoleList = systemCharacterServiceImp.optionCharacter();
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        baseRespVo.setData(cskaoyanMallRoleList);
+        baseRespVo.setErrno(0);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+    @RequestMapping("role/permissions")
+    public BaseRespVo<Object> ListAuths(Integer roleId) {
+        HashMap map = systemCharacterServiceImp.queryAuthorityById(roleId);
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        baseRespVo.setErrmsg("成功");
+        baseRespVo.setErrno(0);
+        baseRespVo.setData(map);
+        return baseRespVo;
+    }
+
+    //没有给返回类型中data数据
+    @RequestMapping("admin/create")
+    public BaseRespVo<Object> addAdmin(@RequestBody CskaoyanMallAdmin cskaoyanMallAdmin) {
+        CskaoyanMallAdmin cskaoyanMallAdmin1 = systemAdminService.addAdmin(cskaoyanMallAdmin);
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        baseRespVo.setErrno(0);
+        baseRespVo.setErrmsg("成功");
+        baseRespVo.setData(cskaoyanMallAdmin1);
+        return baseRespVo;
+    }
+
+    @RequestMapping("admin/delete")
+    public BaseRespVo<Object> deleteAdmin(@RequestBody CskaoyanMallAdmin cskaoyanMallAdmin) {
+        Integer id = cskaoyanMallAdmin.getId();
+        systemAdminService.deleteAdmin(id);
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        baseRespVo.setErrmsg("成功");
+        baseRespVo.setErrno(0);
+        return baseRespVo;
+    }
+
+    @Autowired
+    CskaoyanMallLogService cskaoyanMallLogService;
+
+    @RequestMapping("log/list")
+    public BaseRespVo<Object> listAllLog(Integer page, Integer limit, String name, String sort, String order) {
+        PageHelper.startPage(page, limit);
+        List<CskaoyanMallLog> cskaoyanMallLogList = cskaoyanMallLogService.listLog(page, limit, name, sort, order);
+        PageInfo<CskaoyanMallLog> cskaoyanMallLogPageInfo = new PageInfo<>(cskaoyanMallLogList);
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        Map map = new HashMap<String, Object>();
+        map.put("items", cskaoyanMallLogList);
+        map.put("total", cskaoyanMallLogPageInfo.getTotal());
+        baseRespVo.setData(map);
+        baseRespVo.setErrno(0);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
 }

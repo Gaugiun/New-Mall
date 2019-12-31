@@ -75,4 +75,12 @@
     from cskaoyan_mall_role
     where name = #{name,jdbcType=VARCHAR}
   </select>
+
+  <resultMap id="RolesResultMap" type="com.baidu.mall.bean.SystemCharacters4Options">
+    <id column="id" jdbcType="INTEGER" property="value" />
+    <result column="name" jdbcType="VARCHAR" property="label" />
+  </resultMap>
+  <select id="showRoles" resultMap="RolesResultMap">
+    SELECT id, `name` FROM cskaoyan_mall_role
+  </select>
 </mapper>

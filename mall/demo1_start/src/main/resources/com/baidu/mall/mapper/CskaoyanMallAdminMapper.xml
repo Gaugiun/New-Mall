@@ -11,7 +11,7 @@
     <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="deleted" jdbcType="BIT" property="deleted" />
-    <result column="role_ids" jdbcType="VARCHAR" property="roleIds" />
+    <result column="role_ids" jdbcType="VARCHAR" property="roleIds" typeHandler="com.baidu.mall.typehandler.String2SIntegerArrayTypeHandler"/>
   </resultMap>
   <sql id="Base_Column_List">
     id, username, password, last_login_ip, last_login_time, avatar, add_time, update_time,
@@ -81,4 +81,17 @@
   <select id="selectPermissionByUserName" resultType="java.lang.String">
     select p
   </select>
+    <select id="selectALL" resultMap="BaseResultMap">
+      SELECT
+      <include refid="Base_Column_List" />
+      from cskaoyan_mall_admin
+      <where>
+        <if test="username!=null">
+          and `username` like "%"#{username}"%"
+        </if>
+      </where>
+    </select>
+  <insert id="addAdmin" parameterType="com.baidu.mall.bean.CskaoyanMallAdmin">
+    INSERT INTO cskaoyan_mall_admin VALUES (NULL, #{username}, #{password}, NULL, NULL, #{avatar}, NULL, NULL, 0, #{roleIds})
+  </insert>
 </mapper>

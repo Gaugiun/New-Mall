@@ -14,7 +14,7 @@ public class SystemStorageServiceImpl implements SystemStorageService {
     CskaoyanMallStorageMapper cskaoyanMallStorageMapper;
 
     @Override
-    public List<CskaoyanMallStorage> selectStorage(Integer key, String name) {
+    public List<CskaoyanMallStorage> selectStorage(String key, String name) {
         return cskaoyanMallStorageMapper.selectStorage(key,name);
     }
 

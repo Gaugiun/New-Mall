@@ -10,18 +10,20 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collection;
 
-@MappedTypes(String[].class)
-public class String2StringArrayTypeHandler implements TypeHandler<String[]> {
+@MappedTypes(ArrayList.class)
+public class String2SIntegerArrayTypeHandler implements TypeHandler<ArrayList<Integer>> {
     @Override
-    public void setParameter(PreparedStatement preparedStatement, int index, String[] strings, JdbcType jdbcType) throws SQLException {
+    public void setParameter(PreparedStatement preparedStatement, int index, ArrayList<Integer> arrayList, JdbcType jdbcType) throws SQLException {
         //存入的过程
         //使用json 是方便转换过程
         ObjectMapper objectMapper = new ObjectMapper();
         //这是存入过程
         String s = null;
         try {
-            s = objectMapper.writeValueAsString(strings);
+            s = objectMapper.writeValueAsString(arrayList);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
@@ -30,25 +32,27 @@ public class String2StringArrayTypeHandler implements TypeHandler<String[]> {
     /*
     * 取出字符串数据，并且封装成String[]格式的过程
     * */
+
+
     @Override
-    public String[] getResult(ResultSet resultSet, String column) throws SQLException {
+    public ArrayList<Integer> getResult(ResultSet resultSet, String column) throws SQLException {
         String result = resultSet.getString(column);
         return transfer(result);
     }
 
     @Override
-    public String[] getResult(ResultSet resultSet, int index) throws SQLException {
+    public ArrayList<Integer> getResult(ResultSet resultSet, int index) throws SQLException {
         String result = resultSet.getString(index);
         return transfer(result);
     }
 
     @Override
-    public String[] getResult(CallableStatement callableStatement, int index) throws SQLException {
+    public ArrayList<Integer> getResult(CallableStatement callableStatement, int index) throws SQLException {
         String result = callableStatement.getString(index);
         return transfer(result);
     }
 
-    private String[] transfer(String result){
+    private ArrayList<Integer> transfer(String result){
         ObjectMapper objectMapper = new ObjectMapper();
         String[] strings = new String[0];
         try {
@@ -56,6 +60,11 @@ public class String2StringArrayTypeHandler implements TypeHandler<String[]> {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return strings;
+        ArrayList<Integer> integers = new ArrayList<>();
+        for (String s : strings) {
+            Integer integer = Integer.valueOf(s);
+            integers.add(integer);
+        }
+        return integers;
     }
 }
