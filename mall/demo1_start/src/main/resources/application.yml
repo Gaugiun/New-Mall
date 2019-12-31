@@ -8,6 +8,7 @@ spring:
     username: root
     password: 123456
 
+
 pagehelper:
   helper-dialect: mysql
 logging:
