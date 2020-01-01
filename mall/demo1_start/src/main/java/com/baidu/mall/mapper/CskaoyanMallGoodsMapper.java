@@ -1,5 +1,6 @@
 package com.baidu.mall.mapper;
 
+import com.baidu.mall.bean.BaseWxGoods;
 import com.baidu.mall.bean.CskaoyanMallGoods;
 import org.apache.ibatis.annotations.Param;
 

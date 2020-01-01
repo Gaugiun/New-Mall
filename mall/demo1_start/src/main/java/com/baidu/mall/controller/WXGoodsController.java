@@ -109,14 +109,13 @@ public class WXGoodsController {
         resp.setErrmsg("成功");
 
         return resp;
-<<<<<<< Updated upstream
     }*/
 
-    /**
+/*    *//**
      * 点击二级目录后显示该目录及其兄弟目录
      * @param id
      * @return
-     */
+     *//*
     @RequestMapping("goods/category")
     public BaseRespVo categoryIndex(Integer id){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
@@ -125,6 +124,6 @@ public class WXGoodsController {
         baseRespVo.setErrno(0);
         baseRespVo.setErrmsg("成功");
         return baseRespVo;
-    }
+    }*/
 }
 
