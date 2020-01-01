@@ -31,4 +31,5 @@ public interface CskaoyanMallGoodsMapper {
     String selectShareUrlById(Integer id);
 
     List<CskaoyanMallGoods> selectGoodsListByCategoryId(Integer categoryId);
+
 }

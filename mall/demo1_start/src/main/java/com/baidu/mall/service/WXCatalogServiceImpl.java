@@ -5,6 +5,7 @@ import com.baidu.mall.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +29,10 @@ public class WXCatalogServiceImpl implements WXCatalogService {
     CskaoyanMallRegionMapper cskaoyanMallRegionMapper;
     @Autowired
     CskaoyanMallFeedbackMapper cskaoyanMallFeedbackMapper;
+    @Autowired
+    CskaoyanMallFootprintMapper cskaoyanMallFootprintMapper;
+    @Autowired
+    CskaoyanMallCartMapper cskaoyanMallCartMapper;
 
     //表示数据库中的总共的商品数量  李雅雯已写 等会可以删除
     private Integer goodsCount;
@@ -125,11 +130,16 @@ public class WXCatalogServiceImpl implements WXCatalogService {
     }
 
     @Override
-    public List<CskaoyanMallCouponUser> couponMylist(Integer userId, Short status) {
+    public List<CskaoyanMallCoupon> couponMylist(Integer userId, Short status) {
         CskaoyanMallCouponUserExample cskaoyanMallCouponUserExample = new CskaoyanMallCouponUserExample();
         cskaoyanMallCouponUserExample.createCriteria().andUserIdEqualTo(userId).andStatusEqualTo(status);
         List<CskaoyanMallCouponUser> couponUserList = cskaoyanMallCouponUserMapper.selectByExample(cskaoyanMallCouponUserExample);
-        return couponUserList;
+        List<CskaoyanMallCoupon> list = new ArrayList<>();
+        for (CskaoyanMallCouponUser couponUser : couponUserList) {
+            CskaoyanMallCoupon cskaoyanMallCoupon = cskaoyanMallCouponMapper.selectByPrimaryKey(couponUser.getCouponId());
+            list.add(cskaoyanMallCoupon);
+        }
+        return list;
     }
 
     @Override
@@ -194,4 +204,47 @@ public class WXCatalogServiceImpl implements WXCatalogService {
         boolean b =  cskaoyanMallFeedbackMapper.insert(cskaoyanMallFeedback);
         return false;
     }
+
+    @Override
+    public List<FootPrintBean> footprintList() {
+        List<CskaoyanMallFootprint> cskaoyanMallFootprints = cskaoyanMallFootprintMapper.select();
+        List<FootPrintBean> list = new ArrayList();
+        for (CskaoyanMallFootprint cskaoyanMallFootprint : cskaoyanMallFootprints) {
+            CskaoyanMallGoods cskaoyanMallGood = cskaoyanMallGoodsMapper.selectByPrimaryKey(cskaoyanMallFootprint.getGoodsId());
+            FootPrintBean footPrintBean = new FootPrintBean();
+            footPrintBean.setBrief(cskaoyanMallGood.getBrief());
+            footPrintBean.setPicUrl(cskaoyanMallGood.getPicUrl());
+            footPrintBean.setAddTime(cskaoyanMallGood.getAddTime());
+            footPrintBean.setGoodsId(cskaoyanMallGood.getId());
+            footPrintBean.setName(cskaoyanMallGood.getName());
+            footPrintBean.setId(cskaoyanMallFootprint.getId());
+            footPrintBean.setRetailPrice(cskaoyanMallGood.getRetailPrice());
+            list.add(footPrintBean);
+        }
+        return list;
+    }
+
+    @Override
+    public List<CskaoyanMallCoupon> couponSelectlist(Integer userId) {
+        List<CskaoyanMallCart> cartList = cskaoyanMallCartMapper.selectByChack(true);
+        BigDecimal price = new BigDecimal(0);
+        for (CskaoyanMallCart cskaoyanMallCart : cartList) {
+            price = price.add(cskaoyanMallCart.getPrice());
+        }
+        CskaoyanMallCouponUserExample cskaoyanMallCouponUserExample = new CskaoyanMallCouponUserExample();
+        Short status = 0;
+        cskaoyanMallCouponUserExample.createCriteria().andUserIdEqualTo(userId).andStatusEqualTo(status);
+        List<CskaoyanMallCouponUser> couponUserList = cskaoyanMallCouponUserMapper.selectByExample(cskaoyanMallCouponUserExample);
+        List<CskaoyanMallCoupon> list = new ArrayList<>();
+        for (CskaoyanMallCouponUser couponUser : couponUserList) {
+            CskaoyanMallCoupon cskaoyanMallCoupon = cskaoyanMallCouponMapper.selectByPrimaryKey(couponUser.getCouponId());
+            int i = cskaoyanMallCoupon.getMin().compareTo(price);
+            if (i < 1){
+                list.add(cskaoyanMallCoupon);
+            }
+        }
+        return list;
+    }
+
+
 }

@@ -179,9 +179,9 @@ public class WXCatalogController {
     public BaseRespVo couponMylist(Short status, Integer page, Integer size){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
         PageHelper.startPage(page, size);
-        List<CskaoyanMallCouponUser> goodsList = wxCatalogService.couponMylist(userId, status);
+        List<CskaoyanMallCoupon> goodsList = wxCatalogService.couponMylist(userId, status);
         //貌似用不到PageInfo 等会试试
-        PageInfo<CskaoyanMallCouponUser> count = new PageInfo<>(goodsList);
+        //PageInfo<CskaoyanMallCoupon> count = new PageInfo<>(goodsList);
         HashMap data = new HashMap();
         data.put("data", goodsList);
         data.put("count", goodsList.size());
@@ -305,6 +305,42 @@ public class WXCatalogController {
         return baseRespVo;
     }
 
+    /**
+     * 显示浏览足迹
+     * @param page
+     * @param size
+     * @return
+     */
+    @RequestMapping("footprint/list")
+    public BaseRespVo footprintList(Integer page, Integer size){
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        PageHelper.startPage(page, size);
+        List<FootPrintBean> footprintList = wxCatalogService.footprintList();
+        //貌似用不到PageInfo 等会试试
+       // PageInfo<FootPrintBean> totalPages = new PageInfo<>(footprintList);
+        double a = footprintList.size();
+        double b = size;
+        int totalPages = (int) Math.ceil(a / b);
+        HashMap data = new HashMap();
+        data.put("footprintList", footprintList);
+        data.put("totalPages", totalPages);
+        baseRespVo.setData(data);
+        baseRespVo.setErrno(0);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+    @RequestMapping("coupon/selectlist")
+    public BaseRespVo couponSelectlist(Integer cartId, Integer grouponRulesId){
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+
+        List<CskaoyanMallCoupon> list = wxCatalogService.couponSelectlist(userId);
+
+        baseRespVo.setData(list);
+        baseRespVo.setErrno(0);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
 
 
 }
