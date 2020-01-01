@@ -45,6 +45,8 @@ public class WXCatalogController {
      * @return
      */
 /*    @RequestMapping("goods/count")
+=======*/
+    /*@RequestMapping("goods/count")
     public BaseRespVo count(){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
         Integer goodsCount = wxCatalogService.count();
@@ -80,6 +82,9 @@ public class WXCatalogController {
      * @return
      */
 /*    @RequestMapping("goods/list")
+=======*/
+    /*@RequestMapping("goods/list")
+>>>>>>> Stashed changes
     public BaseRespVo goodsList(Integer categoryId, Integer page, Integer size){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
         PageHelper.startPage(page, size);
@@ -93,7 +98,10 @@ public class WXCatalogController {
         baseRespVo.setErrno(0);
         baseRespVo.setErrmsg("成功");
         return baseRespVo;
+<<<<<<< Updated upstream
     }*/
+
+
 
     /**
      * 登录

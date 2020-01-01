@@ -18,11 +18,11 @@
     <result column="deleted" jdbcType="BIT" property="deleted" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, goods_id, goods_sn, goods_name, product_id, price, number, specifications, 
+    id, user_id, goods_id, goods_sn, goods_name, product_id, price, number, specifications,
     checked, pic_url, add_time, update_time, deleted
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select 
+    select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_cart
     where id = #{id,jdbcType=INTEGER}
@@ -93,4 +93,52 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectCarts" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+   from cskaoyan_mall_cart
+  </select>
+  <update id="updateByProductId">
+    update cskaoyan_mall_cart set
+    checked = #{isChecked}
+    <where>
+      product_id = #{productId}
+    </where>
+  </update>
+  <insert id="insert" parameterType="com.baidu.mall.bean.CskaoyanMallCart">
+    insert into cskaoyan_mall_cart
+    <include refid="Base_Column_List"/>
+   values
+    (#{id}, #{userId}, #{goodsId}, #{goodsSn}, #{goodsName}, #{productId}, #{price}, #{number}, #{specifications}, #{checked},
+    #{picUrl}, #{addTime}, #{updateTime}, #{deleted})
+  </insert>
+  <update id="updateByIdGoodsIdNumberProductId">
+    update cskaoyan_mall_cart set
+    goods_id = #{goodsId},
+    number = #{number},
+    product_id = #{productId}
+    <where>
+      id = #{id}
+    </where>
+  </update>
+  <delete id="deleteByProductId">
+    delete from cskaoyan_mall_cart
+    <where>
+      product_id = #{productId}
+      and user_id = #{userId}
+    </where>
+  </delete>
+  <select id="selectByProductId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+   from cskaoyan_mall_cart
+   <where>
+     product_id = #{productId}
+   </where>
+  </select>
+  <select id="selectByChecked" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+   from cskaoyan_mall_cart
+   <where>
+     checked = 1
+   </where>
+  </select>
 </mapper>

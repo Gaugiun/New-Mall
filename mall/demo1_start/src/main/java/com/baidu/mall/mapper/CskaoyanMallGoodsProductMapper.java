@@ -13,5 +13,8 @@ public interface CskaoyanMallGoodsProductMapper {
 
     int updateByPrimaryKey(CskaoyanMallGoodsProduct record);
 
-    List<CskaoyanMallGoodsProduct> selectByGoodsId(Integer id);
+    List<CskaoyanMallGoodsProduct> selectById(Integer id);
+
+    CskaoyanMallGoodsProduct selectByGoodsId(Integer goodsId);
+
 }

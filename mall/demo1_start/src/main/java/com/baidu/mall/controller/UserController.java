@@ -1,13 +1,10 @@
 package com.baidu.mall.controller;
 
 import com.baidu.mall.bean.*;
-import com.baidu.mall.mapper.CskaoyanMallUserMapper;
 import com.baidu.mall.service.UserService;
-import com.baidu.mall.service.UserServiceImpl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 

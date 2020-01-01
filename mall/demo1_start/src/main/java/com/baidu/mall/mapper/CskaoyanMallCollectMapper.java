@@ -16,4 +16,12 @@ public interface CskaoyanMallCollectMapper {
     int updateByPrimaryKey(CskaoyanMallCollect record);
 
     List<CskaoyanMallCollect> selectCollect(Integer userId, Integer valueId);
+
+    List<CskaoyanMallCollect> selectAllCollectsByUserId(Integer userId);
+
+    CskaoyanMallCollect selectCollectByUserIdTypeValueId(Integer userId, Byte type, Integer valueId);
+
+    void insertByUserIdTypeValueId(Integer userId, Byte type, Integer valueId);
+
+    void deleteByUserIdTypeValueId(Integer userId, Byte type, Integer valueId);
 }
