@@ -67,7 +67,7 @@ public class WxGoodsServiceImpl implements WxGoodsService {
         baseWxGoodsVo.setComment(commentMap);
         baseWxGoodsVo.setAttribute(cskaoyanMallGoodsAttributeMapper.selectAttributeByGoodsId(id));
         baseWxGoodsVo.setBrand(cskaoyanMallBrandMapper.selectBrandByGoodsId(id));
-        baseWxGoodsVo.setProductList(cskaoyanMallGoodsProductMapper.selectByGoodsId(id));
+        baseWxGoodsVo.setProductList(cskaoyanMallGoodsProductMapper.selectById(id));
         baseWxGoodsVo.setInfo(cskaoyanMallGoodsMapper.selectByPrimaryKey(id));
 
         return baseWxGoodsVo;
@@ -81,5 +81,10 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     @Override
     public List<CskaoyanMallCategory> selectFilterCategoryListByCategoryId(Integer categoryId) {
         return cskaoyanMallCategoryMapper.selectFilterCategoryListByCategoryId(categoryId);
+    }
+
+    @Override
+    public List<BaseWxGoods> selectGoodsListByKeywords(String keyword) {
+        return cskaoyanMallGoodsMapper.selectGoodsListByKeywords(keyword);
     }
 }

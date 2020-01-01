@@ -34,7 +34,7 @@ public interface CskaoyanMallCategoryMapper {
 
     List<CskaoyanMallCategory> selectByPidAndLevel(@Param("pid") Integer pid);
 
-    List<CskaoyanMallCategoryToIdNameIconUrl> selectCategoryForIdNameIconUrl();
+    List<CskaoyanMallCategoryToIdNameIconUrl> selectCategoryLevel1ForIdNameIconUrl();
 
     List<CskaoyanMallCategory> selectFilterCategoryListByCategoryId(Integer categoryId);
 }

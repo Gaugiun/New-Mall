@@ -88,4 +88,21 @@
     #{isHot}, #{isDefault},
     100, now(), now(), false)
   </insert>
+    <select id="selectByIsHot" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/>
+   from cskaoyan_mall_keyword
+   <where>
+     <if test="isHot != null">
+       is_hot = #{isHot,jdbcType=BIT}
+     </if>
+   </where>
+    </select>
+  <select id="selectKeywordsByInput" resultType="java.lang.String">
+    select keyword from
+    cskaoyan_mall_keyword
+    <where>
+      <bind name="keyword" value="'%' + keyword + '%'"/>
+      keyword like #{keyword}
+    </where>
+  </select>
 </mapper>

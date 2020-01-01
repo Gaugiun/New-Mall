@@ -107,10 +107,12 @@
     select <include refid="Base_Column_List" /> from cskaoyan_mall_user
     <where>
       <if test="username!=null">
-        and username like "%"#{username}"%"
+        <bind name="username" value="'%' + username + '%'"/>
+        and username like #{username}
       </if>
       <if test="mobile!=null">
-        and mobile like "%"#{mobile}"%"
+       <bind name="mobile" value="'%' + mobile + '%'"/>
+        and mobile like #{mobile}
       </if>
     </where>
   </select>
@@ -129,6 +131,13 @@
       <where>
         username = #{username} and password = #{password}
       </where>
+    </select>
+    <select id="selectByUsername" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/>
+   from cskaoyan_mall_user
+   <where>
+     username = #{username}
+   </where>
     </select>
 
 

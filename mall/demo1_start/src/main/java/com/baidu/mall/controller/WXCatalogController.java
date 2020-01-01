@@ -44,6 +44,10 @@ public class WXCatalogController {
 /*    *//**
      * 搜索框默认显示一共多少商品
      * @return
+     */
+/*    @RequestMapping("goods/count")
+=======*/
+    /*@RequestMapping("goods/count")
      *//*
     @RequestMapping("goods/count")
     public BaseRespVo count(){
@@ -89,11 +93,17 @@ public class WXCatalogController {
     }
 
 /*    *//**
+    /**
      * 显示该二级目录（商品分类）下的所有商品
      * @param categoryId
      * @param page
      * @param size
      * @return
+     */
+/*    @RequestMapping("goods/list")
+=======*/
+    /*@RequestMapping("goods/list")
+>>>>>>> Stashed changes
      *//*
     @RequestMapping("goods/list")
     public BaseRespVo goodsList(Integer categoryId, Integer page, Integer size){
@@ -111,6 +121,9 @@ public class WXCatalogController {
         return baseRespVo;
     }*/
 
+
+
+
     /**
      * 登录
      * @param hashMap
@@ -124,9 +137,6 @@ public class WXCatalogController {
         CskaoyanMallUser cskaoyanMallUser = wxCatalogService.authLogin(username, password);
 
         userId = cskaoyanMallUser.getId();
-
-       // request.getSession().setAttribute("userId", cskaoyanMallUser.getId());
-
 
         HashMap data = new HashMap();
         HashMap userInfo = new HashMap();

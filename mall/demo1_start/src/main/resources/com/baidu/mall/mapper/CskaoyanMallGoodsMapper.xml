@@ -26,6 +26,16 @@
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.baidu.mall.bean.CskaoyanMallGoods">
     <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
   </resultMap>
+  <resultMap id="SpecialResultMap" type="com.baidu.mall.bean.BaseWxGoods">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="brief" jdbcType="VARCHAR" property="brief" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <result column="is_new" jdbcType="BIT" property="isNew" />
+    <result column="is_hot" jdbcType="BIT" property="isHot" />
+    <result column="counter_price" jdbcType="DECIMAL" property="counterPrice" />
+    <result column="retail_price" jdbcType="DECIMAL" property="retailPrice" />
+  </resultMap>
   <sql id="Base_Column_List">
     id, goods_sn, name, category_id, brand_id, gallery, keywords, brief, is_on_sale,
     sort_order, pic_url, share_url, is_new, is_hot, unit, counter_price, retail_price,
@@ -184,6 +194,16 @@
     select share_url from cskaoyan_mall_goods where id = #{id}
   </select>
   <select id="selectGoodsListByCategoryId" resultMap="BaseResultMap">
-    select <include refid="Base_Column_List"/> from cskaoyan_mall_goods where categor_id = #{categoryId}
+    select <include refid="Base_Column_List"/> from cskaoyan_mall_goods where category_id = #{categoryId}
   </select>
+    <select id="selectGoodsListByKeywords" resultMap="SpecialResultMap">
+      select id,name,brief,pic_url,is_new,is_hot,counter_price,retail_price
+   from cskaoyan_mall_goods
+   <where>
+     <if test="keywords != null">
+       <bind name="keywords" value="'%' + keywords + '%'"/>
+       keywords like #{keywords}
+     </if>
+   </where>
+    </select>
 </mapper>

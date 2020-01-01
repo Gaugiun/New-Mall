@@ -22,5 +22,9 @@ public interface CskaoyanMallUserMapper {
     List<CskaoyanMallUser> selectAllUser(String username, String mobile);
 
     CskaoyanMallUser selectByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+
     List<StatisticsUsersRow> selectDateNumble();
+
+    CskaoyanMallUser selectByUsername(String username);
+
 }

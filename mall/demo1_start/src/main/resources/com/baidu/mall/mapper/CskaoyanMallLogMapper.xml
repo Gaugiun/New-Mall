@@ -77,4 +77,14 @@
       deleted = #{deleted,jdbcType=BIT}
     where id = #{id,jdbcType=INTEGER}
   </update>
+    <select id="selectAllByName" resultMap="BaseResultMap">
+        SELECT
+      <include refid="Base_Column_List" />
+        from cskaoyan_mall_log
+        <where>
+          <if test="name!=null">
+            and `admin` like "%"#{name}"%"
+          </if>
+        </where>
+      </select>
 </mapper>

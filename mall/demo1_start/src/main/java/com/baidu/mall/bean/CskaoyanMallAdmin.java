@@ -1,5 +1,6 @@
 package com.baidu.mall.bean;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class CskaoyanMallAdmin {
@@ -21,7 +22,7 @@ public class CskaoyanMallAdmin {
 
     private Boolean deleted;
 
-    private String roleIds;
+    private ArrayList<Integer> roleIds;
 
     public Integer getId() {
         return id;
@@ -95,11 +96,11 @@ public class CskaoyanMallAdmin {
         this.deleted = deleted;
     }
 
-    public String getRoleIds() {
+    public ArrayList<Integer> getRoleIds() {
         return roleIds;
     }
 
-    public void setRoleIds(String roleIds) {
-        this.roleIds = roleIds == null ? null : roleIds.trim();
+    public void setRoleIds(ArrayList<Integer> roleIds) {
+        this.roleIds = roleIds;
     }
 }

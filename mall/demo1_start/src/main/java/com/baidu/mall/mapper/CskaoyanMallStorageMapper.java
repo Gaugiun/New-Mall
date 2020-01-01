@@ -15,7 +15,7 @@ public interface CskaoyanMallStorageMapper {
 
     int updateByPrimaryKey(CskaoyanMallStorage record);
 
-    List<CskaoyanMallStorage> selectStorage(Integer key, String name);
+    List<CskaoyanMallStorage> selectStorage(String key, String name);
 
     void insertStorage(CskaoyanMallStorage storage);
 
