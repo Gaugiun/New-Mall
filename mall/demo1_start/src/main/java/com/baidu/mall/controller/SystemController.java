@@ -6,6 +6,7 @@ import com.baidu.mall.service.CskaoyanMallLogService;
 import com.baidu.mall.service.SystemAdminService;
 import com.baidu.mall.service.SystemCharacterServiceImp;
 import com.baidu.mall.service.SystemStorageServiceImpl;
+import com.baidu.mall.utils.COSFileUploadUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -66,8 +69,13 @@ public class SystemController {
         Date date = new Date(currentTime);
 
         File file1 = new File(ResourceUtils.getURL("classpath:static/img/").getPath()+filename);
-
         file.transferTo(file1);
+
+        try {
+            COSFileUploadUtil.picCOS(file1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         CskaoyanMallStorage storage = new CskaoyanMallStorage();
         storage.setId(null);
@@ -75,7 +83,8 @@ public class SystemController {
         storage.setName(originalFilename);
         storage.setType(file.getContentType());
         storage.setSize((int) file.getSize());
-        storage.setUrl("http://localhost:8081/img/"+filename);
+//        storage.setUrl("http://localhost:8081/img/"+filename);
+        storage.setUrl("https://qwddfty-1256376956.cos.ap-beijing.myqcloud.com/"+filename);
         storage.setAddTime(date);
         storage.setUpdateTime(null);
 

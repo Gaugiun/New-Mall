@@ -1,6 +1,7 @@
 package com.baidu.mall.mapper;
 
 import com.baidu.mall.bean.CskaoyanMallPermission;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -14,4 +15,6 @@ public interface CskaoyanMallPermissionMapper {
     int updateByPrimaryKey(CskaoyanMallPermission record);
 
     List<CskaoyanMallPermission> selectByRoleId(Integer roleId);
+
+    List<String> selectPermissionsInRoleIds(@Param("roleIds") String roleIds);
 }

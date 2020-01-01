@@ -21,4 +21,8 @@ public interface CskaoyanMallAdminMapper {
     List<CskaoyanMallAdmin> selectALL(String username);
 
     void addAdmin(CskaoyanMallAdmin cskaoyanMallAdmin);
+
+    CskaoyanMallAdmin selectAdminByUsername(String username);
+
+    String selectRoleIdsByUsername(String username);
 }

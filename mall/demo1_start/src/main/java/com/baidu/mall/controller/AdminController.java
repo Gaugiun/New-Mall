@@ -1,6 +1,7 @@
 package com.baidu.mall.controller;
 
 import com.baidu.mall.bean.BaseRespVo;
+import com.baidu.mall.config.LoginVo;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -21,26 +22,26 @@ public class AdminController {
      * @param map
      * @return
      */
-    /*@RequestMapping("auth/login")
-    public BaseRespVo login(@RequestBody HashMap<String, String> map){
-        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
-        String username = map.get("username");
-        String password = map.get("password");
+    @RequestMapping("auth/login")
+    public BaseRespVo adminLogin(@RequestBody LoginVo loginVo) {
+        BaseRespVo baseRespVo = new BaseRespVo();
         Subject subject = SecurityUtils.getSubject();
         try {
-            subject.login(new UsernamePasswordToken(username, password));
-            Serializable id = subject.getSession().getId();
-            baseRespVo.setErrno(0);
-            baseRespVo.setData(id);
-            baseRespVo.setErrmsg("成功");
-            return baseRespVo;
+            subject.login(new UsernamePasswordToken(loginVo.getUsername(), loginVo.getPassword()));
         } catch (AuthenticationException e) {
-            baseRespVo.setErrno(10000);
-            baseRespVo.setErrmsg("失败");
+            baseRespVo.setErrno(502);
+            baseRespVo.setErrmsg("请登录后访问");
             return baseRespVo;
         }
-    }*/
-    @RequestMapping("auth/login")
+        Serializable id = subject.getSession().getId();
+
+        baseRespVo.setData(id);
+        baseRespVo.setErrno(0);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+    /*@RequestMapping("auth/login")
     public BaseRespVo login(@RequestBody HashMap<String, String> map){
 
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
@@ -55,7 +56,7 @@ public class AdminController {
             return baseRespVo;
         }
         return baseRespVo;
-    }
+    }*/
 
     @RequestMapping("auth/info")
     public BaseRespVo info(){

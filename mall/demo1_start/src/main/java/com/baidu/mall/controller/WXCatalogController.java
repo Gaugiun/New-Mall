@@ -4,6 +4,7 @@ import com.baidu.mall.bean.*;
 import com.baidu.mall.service.MallService;
 import com.baidu.mall.service.MallServiceImpl;
 import com.baidu.mall.service.WXCatalogService;
+import com.baidu.mall.utils.md5.Md5Util;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,10 +105,13 @@ public class WXCatalogController {
     public BaseRespVo authLogin(@RequestBody HashMap<String, String> hashMap){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
         String username = hashMap.get("username");
-        String password = hashMap.get("password");
+        String oldPassword = hashMap.get("password");
+        String password = Md5Util.getMd5(oldPassword);
         CskaoyanMallUser cskaoyanMallUser = wxCatalogService.authLogin(username, password);
 
-        userId = cskaoyanMallUser.getId();
+        if (cskaoyanMallUser != null) {
+            userId = cskaoyanMallUser.getId();
+        }
 
         HashMap data = new HashMap();
         HashMap userInfo = new HashMap();
