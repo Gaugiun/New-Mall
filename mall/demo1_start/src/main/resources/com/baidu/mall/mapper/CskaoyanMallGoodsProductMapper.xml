@@ -68,6 +68,13 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
     <select id="selectByGoodsId" resultMap="BaseResultMap">
-      select <include refid="Base_Column_List"/> from cskaoyan_mall_goods_product where goods_id = #{id}
+      select <include refid="Base_Column_List"/>
+   from cskaoyan_mall_goods_product
+   <where>
+     goods_id = #{goodsId}
+   </where>
     </select>
+  <select id="selectById" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from cskaoyan_mall_goods_product where goods_id = #{id}
+  </select>
 </mapper>

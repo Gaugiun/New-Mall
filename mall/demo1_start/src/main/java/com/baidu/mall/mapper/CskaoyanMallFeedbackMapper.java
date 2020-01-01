@@ -16,4 +16,6 @@ public interface CskaoyanMallFeedbackMapper {
     int updateByPrimaryKey(CskaoyanMallFeedback record);
 
     List<CskaoyanMallFeedback> selectFeedback(Integer id, String username);
+
+    boolean insert(CskaoyanMallFeedback cskaoyanMallFeedback);
 }

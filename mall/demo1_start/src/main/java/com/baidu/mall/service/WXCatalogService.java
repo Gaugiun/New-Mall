@@ -21,7 +21,7 @@ public interface WXCatalogService {
 
     CskaoyanMallUser authLogin(String username, String password);
 
-    List<CskaoyanMallCouponUser> couponMylist(Integer userId, Short status);
+    List<CskaoyanMallCoupon> couponMylist(Integer userId, Short status);
 
     List<CskaoyanMallCoupon> couponExchange(String code);
 
@@ -34,4 +34,10 @@ public interface WXCatalogService {
     boolean addressDelete(Integer id);
 
     List<CskaoyanMallRegion> regionList(Integer pid);
+
+    boolean feedbackSubmit(Integer userId, CskaoyanMallFeedback cskaoyanMallFeedback);
+
+    List<FootPrintBean> footprintList();
+
+    List<CskaoyanMallCoupon> couponSelectlist(Integer userId);
 }

@@ -1,8 +1,6 @@
 package com.baidu.mall.controller;
 
 import com.baidu.mall.bean.*;
-import com.baidu.mall.service.MallService;
-import com.baidu.mall.service.MallServiceImpl;
 import com.baidu.mall.service.WXCatalogService;
 import com.baidu.mall.utils.md5.Md5Util;
 import com.github.pagehelper.PageHelper;
@@ -21,8 +19,11 @@ import java.util.List;
 @RestController
 @RequestMapping("wx")
 public class WXCatalogController {
-    //这里定义一个 userId 用于API：coupon/receive 领取优惠券时查询是否已经领取过优惠券
+    //这里定义一个 userId 用于API
     private Integer userId;
+
+/*    @Autowired
+    HttpServletRequest request;*/
 
     @Autowired
     WXCatalogService wxCatalogService;
@@ -41,11 +42,15 @@ public class WXCatalogController {
         return baseRespVo;
     }
 
-    /**
+/*    *//**
      * 搜索框默认显示一共多少商品
      * @return
      */
 /*    @RequestMapping("goods/count")
+=======*/
+    /*@RequestMapping("goods/count")
+     *//*
+    @RequestMapping("goods/count")
     public BaseRespVo count(){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
         Integer goodsCount = wxCatalogService.count();
@@ -74,6 +79,22 @@ public class WXCatalogController {
     }
 
     /**
+     * 点击二级目录后显示该目录及其兄弟目录
+     * @param id
+     * @return
+     */
+    @RequestMapping("goods/category")
+    public BaseRespVo categoryIndex(Integer id){
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        HashMap hashMap = wxCatalogService.categoryIndex(id);
+        baseRespVo.setData(hashMap);
+        baseRespVo.setErrno(0);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+/*    *//**
+    /**
      * 显示该二级目录（商品分类）下的所有商品
      * @param categoryId
      * @param page
@@ -81,6 +102,11 @@ public class WXCatalogController {
      * @return
      */
 /*    @RequestMapping("goods/list")
+=======*/
+    /*@RequestMapping("goods/list")
+>>>>>>> Stashed changes
+     *//*
+    @RequestMapping("goods/list")
     public BaseRespVo goodsList(Integer categoryId, Integer page, Integer size){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
         PageHelper.startPage(page, size);
@@ -95,6 +121,9 @@ public class WXCatalogController {
         baseRespVo.setErrmsg("成功");
         return baseRespVo;
     }*/
+
+
+
 
     /**
      * 登录
@@ -164,9 +193,9 @@ public class WXCatalogController {
     public BaseRespVo couponMylist(Short status, Integer page, Integer size){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
         PageHelper.startPage(page, size);
-        List<CskaoyanMallCouponUser> goodsList = wxCatalogService.couponMylist(userId, status);
+        List<CskaoyanMallCoupon> goodsList = wxCatalogService.couponMylist(userId, status);
         //貌似用不到PageInfo 等会试试
-        PageInfo<CskaoyanMallCouponUser> count = new PageInfo<>(goodsList);
+        //PageInfo<CskaoyanMallCoupon> count = new PageInfo<>(goodsList);
         HashMap data = new HashMap();
         data.put("data", goodsList);
         data.put("count", goodsList.size());
@@ -277,4 +306,55 @@ public class WXCatalogController {
         }
         return baseRespVo;
     }
+
+    @RequestMapping("feedback/submit")
+    public BaseRespVo feedbackSubmit(@RequestBody CskaoyanMallFeedback cskaoyanMallFeedback){
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        boolean b = wxCatalogService.feedbackSubmit(userId, cskaoyanMallFeedback);
+        if (b){
+            baseRespVo.setErrno(0);
+            baseRespVo.setErrmsg("成功");
+            return baseRespVo;
+        }
+        return baseRespVo;
+    }
+
+    /**
+     * 显示浏览足迹
+     * @param page
+     * @param size
+     * @return
+     */
+    @RequestMapping("footprint/list")
+    public BaseRespVo footprintList(Integer page, Integer size){
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+        PageHelper.startPage(page, size);
+        List<FootPrintBean> footprintList = wxCatalogService.footprintList();
+        //貌似用不到PageInfo 等会试试
+       // PageInfo<FootPrintBean> totalPages = new PageInfo<>(footprintList);
+        double a = footprintList.size();
+        double b = size;
+        int totalPages = (int) Math.ceil(a / b);
+        HashMap data = new HashMap();
+        data.put("footprintList", footprintList);
+        data.put("totalPages", totalPages);
+        baseRespVo.setData(data);
+        baseRespVo.setErrno(0);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+    @RequestMapping("coupon/selectlist")
+    public BaseRespVo couponSelectlist(Integer cartId, Integer grouponRulesId){
+        BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
+
+        List<CskaoyanMallCoupon> list = wxCatalogService.couponSelectlist(userId);
+
+        baseRespVo.setData(list);
+        baseRespVo.setErrno(0);
+        baseRespVo.setErrmsg("成功");
+        return baseRespVo;
+    }
+
+
 }

@@ -63,4 +63,7 @@
         </if>
       </where>
     </select>
+    <select id="select" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List" /> from cskaoyan_mall_footprint
+    </select>
 </mapper>

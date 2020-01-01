@@ -68,4 +68,47 @@
         </if>
       </where>
     </select>
+  <select id="selectAllCollectsByUserId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from cskaoyan_mall_collect
+    <where>
+      <if test="userId != null">
+        user_id = #{userId}
+      </if>
+    </where>
+  </select>
+  <select id="selectCollectByUserIdTypeValueId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+   from cskaoyan_mall_collect
+   <where>
+     <if test="userId != null">
+     and user_id = #{userId}
+     </if>
+     <if test="type != null">
+     and type = #{type}
+     </if>
+     <if test="valueId != null">
+     and value_id = #{valueId}
+     </if>
+   </where>
+  </select>
+  <insert id="insertByUserIdTypeValueId">
+    insert into cskaoyan_mall_collect
+    (user_id, value_id, type, add_time, update_time, deleted)
+   values (#{userId}, #{valueId}, #{type}, now(), now(), 0)
+  </insert>
+  <delete id="deleteByUserIdTypeValueId">
+    delete from cskaoyan_mall_collect
+    <where>
+      <if test="userId != null">
+        and user_id = #{userId}
+      </if>
+      <if test="type != null">
+        and type = #{type}
+      </if>
+      <if test="valueId != null">
+      and value_id = #{valueId}
+      </if>
+    </where>
+  </delete>
 </mapper>

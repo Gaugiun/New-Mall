@@ -1,5 +1,6 @@
 package com.baidu.mall.mapper;
 
+import com.baidu.mall.bean.BaseWxGoods;
 import com.baidu.mall.bean.CskaoyanMallGoods;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,4 +32,7 @@ public interface CskaoyanMallGoodsMapper {
     String selectShareUrlById(Integer id);
 
     List<CskaoyanMallGoods> selectGoodsListByCategoryId(Integer categoryId);
+
+
+    List<BaseWxGoods> selectGoodsListByKeywords(String keywords);
 }

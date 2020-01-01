@@ -23,9 +23,11 @@ public interface CskaoyanMallUserMapper {
     List<CskaoyanMallUser> selectAllUser(String username, String mobile);
 
     CskaoyanMallUser selectByUsernameAndPassword(@Param("username") String username, @Param("password") String password);
+
     List<StatisticsUsersRow> selectDateNumble();
+
+    CskaoyanMallUser selectByUsername(String username);
 
     void addUser(@Param("username") String username, @Param("password") String password, @Param("mobile") String mobile, @Param("lastLoginIp")String lastLoginIp);
 
-    Map<String, String> selectByUsername(@Param("username") String username, @Param("password") String password);
 }

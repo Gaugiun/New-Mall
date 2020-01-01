@@ -16,4 +16,8 @@ public interface CskaoyanMallKeywordMapper {
     List<CskaoyanMallKeyword> selectByKeywordUrl(String keyword, String url);
 
     int insert(String keyword, String url, Integer isHot, Integer isDefault);
+
+    List<CskaoyanMallKeyword> selectByIsHot(Boolean isHot);
+
+    List<String> selectKeywordsByInput(String keyword);
 }

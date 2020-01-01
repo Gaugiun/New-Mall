@@ -2,9 +2,7 @@ package com.baidu.mall.controller;
 
 import com.baidu.mall.bean.BaseRespVo;
 import com.baidu.mall.service.AuthRegisterService;
-import com.baidu.mall.service.AuthLoginService;
 import com.baidu.mall.utils.GetIpUtil;
-import com.baidu.mall.utils.md5.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,8 +25,6 @@ public class WXAuthController {
     @Autowired
     AuthRegisterService authRegisterService;
 
-    @Autowired
-    AuthLoginService authLoginService;
 
     @RequestMapping("auth/register")
     public BaseRespVo<Object> registerUser(@RequestBody Map<String, String> json, HttpServletRequest request) {

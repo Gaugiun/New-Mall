@@ -16,4 +16,6 @@ public interface CskaoyanMallFootprintMapper {
     int updateByPrimaryKey(CskaoyanMallFootprint record);
 
     List<CskaoyanMallFootprint> selectFootprint(Integer userId, Integer goodsId);
+
+    List<CskaoyanMallFootprint> select();
 }

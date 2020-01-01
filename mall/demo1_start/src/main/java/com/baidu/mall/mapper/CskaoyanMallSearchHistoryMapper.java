@@ -16,4 +16,10 @@ public interface CskaoyanMallSearchHistoryMapper {
     int updateByPrimaryKey(CskaoyanMallSearchHistory record);
 
     List<CskaoyanMallSearchHistory> selectHistory(Integer userId, String keyword);
+
+    List<String> selectKeywords();
+
+    void deletByUserId(Integer id);
+
+    void insertNewHistory(Integer userId, String keyword);
 }

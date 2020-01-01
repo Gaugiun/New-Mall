@@ -68,4 +68,20 @@
         </if>
       </where>
     </select>
+  <select id="selectKeywords" resultType="java.lang.String">
+    select keyword from
+    cskaoyan_mall_search_history
+  </select>
+
+  <delete id="deletByUserId">
+    delete from cskaoyan_mall_search_history
+    <where>
+      user_id = #{userId}
+    </where>
+  </delete>
+  <insert id="insertNewHistory">
+    insert into cskaoyan_mall_search_history
+    (user_id, keyword, `from`, add_time, update_time, deleted)
+    values (#{userId}, #{keyword}, 'wx', now(), now(), 0)
+  </insert>
 </mapper>

@@ -29,3 +29,10 @@ build/
 
 ### VS Code ###
 .vscode/
+
+1.txt
+.idea/
+target/
+src/main/resources/*.properties
+src/main/resources/*.yml
+/mall/.idea/
