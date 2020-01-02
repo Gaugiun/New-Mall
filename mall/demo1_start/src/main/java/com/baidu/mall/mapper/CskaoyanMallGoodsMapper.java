@@ -35,4 +35,6 @@ public interface CskaoyanMallGoodsMapper {
 
 
     List<BaseWxGoods> selectGoodsListByKeywords(String keywords);
+
+    List<CskaoyanMallGoods> selectAllGoods();
 }

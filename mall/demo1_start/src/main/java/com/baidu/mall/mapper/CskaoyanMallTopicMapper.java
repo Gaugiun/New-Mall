@@ -19,4 +19,6 @@ public interface CskaoyanMallTopicMapper {
     List<CskaoyanMallTopic> selectFuzzy(@Param("title") String title, @Param("subtitle") String subtitle);
 
     int insert(CskaoyanMallTopic cskaoyanMallTopic);
+
+    List<CskaoyanMallTopic> selectAllTopics();
 }

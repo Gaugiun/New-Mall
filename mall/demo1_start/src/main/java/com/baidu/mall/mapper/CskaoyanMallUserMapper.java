@@ -30,4 +30,6 @@ public interface CskaoyanMallUserMapper {
 
     void addUser(@Param("username") String username, @Param("password") String password, @Param("mobile") String mobile, @Param("lastLoginIp")String lastLoginIp);
 
+    String  selectPasswordByUsername(@Param("username") String username);
+
 }

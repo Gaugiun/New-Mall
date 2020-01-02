@@ -142,4 +142,8 @@
       SELECT LAST_INSERT_ID()
     </selectKey>
   </insert>
+    <select id="selectAllTopics" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/>
+   from cskaoyan_mall_topic
+    </select>
 </mapper>

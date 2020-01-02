@@ -206,4 +206,8 @@
      </if>
    </where>
     </select>
+  <select id="selectAllGoods" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+   from cskaoyan_mall_goods
+  </select>
 </mapper>

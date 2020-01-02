@@ -83,4 +83,8 @@
         </if>
       </where>
     </select>
+    <select id="selectAllGroupon" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List"/>
+   from cskaoyan_mall_groupon_rules
+    </select>
 </mapper>
