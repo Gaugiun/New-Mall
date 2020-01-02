@@ -1,5 +1,7 @@
 package com.baidu.mall.service;
 
+import org.springframework.stereotype.Service;
+
 import com.baidu.mall.bean.*;
 import com.baidu.mall.mapper.CskaoyanMallAdminMapper;
 import com.baidu.mall.mapper.CskaoyanMallAllauthMapper;
@@ -10,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class AdminServiceImpl implements AdminService {

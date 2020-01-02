@@ -35,4 +35,6 @@ public interface CskaoyanMallOrderMapper {
     void cancelOrderById(Integer orderId);
 
     void prepayOrderById(Integer orderId);
+
+    void refundOrderById(Integer orderId);
 }

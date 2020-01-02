@@ -243,4 +243,7 @@
   <update id="prepayOrderById">
     update cskaoyan_mall_order set order_status = 201 where id = #{orderId}
   </update>
+  <update id="refundOrderById">
+    update cskaoyan_mall_order set order_status = 202 where id = #{orderId}
+  </update>
 </mapper>
