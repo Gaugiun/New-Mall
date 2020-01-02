@@ -100,15 +100,4 @@
       SELECT brand.* from cskaoyan_mall_brand as brand,cskaoyan_mall_goods as goods
       WHERE goods.brand_id=brand.id  and goods.id=#{id}
     </select>
-
-
-
-
-  <resultMap id="BaseResultMap2" type="com.baidu.mall.bean.goodsbean.GoodsBrand">
-    <id column="id" jdbcType="INTEGER" property="value" />
-    <result column="name" jdbcType="VARCHAR" property="label" />
-  </resultMap>
-  <select id="selectBrand2" resultMap="BaseResultMap2">
-    select id,name from cskaoyan_mall_brand
-  </select>
 </mapper>

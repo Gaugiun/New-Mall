@@ -16,7 +16,6 @@ import java.util.Map;
 
 
 @RestController
-@RequestMapping("wx")
 public class WXCollectController {
 
     @Autowired

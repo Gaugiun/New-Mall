@@ -1,9 +1,7 @@
 package com.baidu.mall.mapper;
 
 import com.baidu.mall.bean.CskaoyanMallGoodsAttribute;
-import org.apache.ibatis.annotations.Param;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 public interface CskaoyanMallGoodsAttributeMapper {
@@ -16,8 +14,4 @@ public interface CskaoyanMallGoodsAttributeMapper {
     int updateByPrimaryKey(CskaoyanMallGoodsAttribute record);
 
     List<CskaoyanMallGoodsAttribute> selectAttributeByGoodsId(Integer id);
-
-    void addGoodsAttribute(@Param("goodsAttribute") LinkedHashMap<String, Object> goodsAttribute);
-
-    void updateAttributeByPrimary(@Param("goodsAttribute") LinkedHashMap<String, Object> goodsAttribute);
 }

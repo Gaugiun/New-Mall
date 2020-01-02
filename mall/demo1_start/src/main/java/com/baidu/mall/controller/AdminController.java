@@ -70,5 +70,10 @@ public class AdminController {
         return baseRespVo;
     }
 
+    @RequestMapping("auth/unAuthc")
+    public String unAuthc(){
+        return "http://localhost:9527/#/login?redirect=%2Fdashboard";
+    }
+
 
 }

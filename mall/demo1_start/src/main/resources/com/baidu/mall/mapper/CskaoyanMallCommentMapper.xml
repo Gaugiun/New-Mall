@@ -24,7 +24,10 @@
     from cskaoyan_mall_comment
     where id = #{id,jdbcType=INTEGER}
   </select>
-
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cskaoyan_mall_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
   <update id="updateByPrimaryKeySelective" parameterType="com.baidu.mall.bean.CskaoyanMallComment">
     update cskaoyan_mall_comment
     <set>

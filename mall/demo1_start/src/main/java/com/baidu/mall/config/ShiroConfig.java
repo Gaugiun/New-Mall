@@ -1,4 +1,3 @@
-/*
 package com.baidu.mall.config;
 
 import com.baidu.mall.realm.AdminRealm;
@@ -35,6 +34,8 @@ public class ShiroConfig {
         filterMap.put("/wx/home/index","anon");
         filterMap.put("/wx/catalog/index","anon");
         filterMap.put("/wx/goods/**","anon");
+        filterMap.put("/wx/brand/**","anon");
+        //filterMap.put("/wx/coupon/**","anon");
         filterMap.put("/wx/catalog/current","anon");
 
         // 需要认证才能访问的路径
@@ -57,14 +58,11 @@ public class ShiroConfig {
         return defaultWebSecurityManager;
     }
 
-    */
-/**
+    /**
      *  声明式鉴权 注解需要的组件
      * @param securityManager
      * @return
-     *//*
-
-
+     */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager){
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
@@ -90,5 +88,3 @@ public class ShiroConfig {
 
 
 }
-
-*/

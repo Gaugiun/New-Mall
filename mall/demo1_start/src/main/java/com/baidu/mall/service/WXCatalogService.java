@@ -40,4 +40,6 @@ public interface WXCatalogService {
     List<FootPrintBean> footprintList();
 
     List<CskaoyanMallCoupon> couponSelectlist(Integer userId);
+
+    boolean saveToken(String token, Integer userId);
 }

@@ -15,6 +15,4 @@ public interface CskaoyanMallGrouponRulesMapper {
     int updateByPrimaryKey(CskaoyanMallGrouponRules record);
 
     List<CskaoyanMallGrouponRules> select(@Param("goodsId") Integer goodsId);
-
-    List<CskaoyanMallGrouponRules> selectAllGroupon();
 }

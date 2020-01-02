@@ -44,20 +44,25 @@ public class WXGoodsController {
 
         return resp;
     }
+
     @RequestMapping("goods/list")
-    public BaseRespVo GoodsList(String keyword, Integer categoryId,
+    public BaseRespVo GoodsList(String keyword, Integer categoryId, Integer brandId,
                                 Integer page, Integer size){
         BaseWxGoodsListVo baseWxGoodsListVo = new BaseWxGoodsListVo();
         BaseWxGoodsList baseWxGoodsList = new BaseWxGoodsList();
         BaseRespVo resp = new BaseRespVo();
         PageHelper.startPage(page, size);
 
-        //if (brandId!=null){
-            //List<CskaoyanMallGoods> cskaoyanMallGoods = wxGoodsService.selectGoodsListByCategoryId(categoryId);
-            //baseWxGoodsListVo.setGoodsList(cskaoyanMallGoods);
-            //baseWxGoodsListVo.setCount(cskaoyanMallGoods.size());
-            //baseWxGoodsListVo.setFilterCategoryList(wxGoodsService.selectFilterCategoryListByCategoryId(categoryId));
-       // }
+        if (brandId!=null){
+            List<CskaoyanMallGoods> cskaoyanMallGoods = wxGoodsService.selectGoodsListByBrandId(brandId);
+            baseWxGoodsListVo.setGoodsList(cskaoyanMallGoods);
+            baseWxGoodsListVo.setCount(cskaoyanMallGoods.size());
+            baseWxGoodsListVo.setFilterCategoryList(wxGoodsService.selectFilterCategoryListByCategoryId(categoryId));
+            resp.setData(baseWxGoodsListVo);
+            resp.setErrno(0);
+            resp.setErrmsg("成功");
+            return resp;
+        }
         if (categoryId!=null && keyword == null){
             List<CskaoyanMallGoods> cskaoyanMallGoods = wxGoodsService.selectGoodsListByCategoryId(categoryId);
             baseWxGoodsListVo.setGoodsList(cskaoyanMallGoods);
@@ -68,8 +73,7 @@ public class WXGoodsController {
             resp.setErrmsg("成功");
 
             return resp;
-        }
-        else if (keyword != null &&  categoryId != null) {
+        } else if (keyword != null &&  categoryId != null) {
             List<BaseWxGoods> cskaoyanMallGoodList = wxGoodsService.selectGoodsListByKeywords(keyword);
             baseWxGoodsList.setGoodsList(cskaoyanMallGoodList);
             baseWxGoodsList.setCount(cskaoyanMallGoodList.size());
@@ -80,10 +84,7 @@ public class WXGoodsController {
 
             return resp;
         }
-
-
         return null;
-
     }
 
 
