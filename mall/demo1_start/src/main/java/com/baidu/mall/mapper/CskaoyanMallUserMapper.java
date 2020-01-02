@@ -27,4 +27,5 @@ public interface CskaoyanMallUserMapper {
 
     CskaoyanMallUser selectByUsername(String username);
 
+    String  selectPasswordByUsername(@Param("username") String username);
 }
