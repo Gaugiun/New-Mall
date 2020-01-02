@@ -1,5 +1,6 @@
 package com.baidu.mall.mapper;
 
+import com.baidu.mall.bean.CskaoyanMallGoods;
 import com.baidu.mall.bean.CskaoyanMallTopic;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,4 +22,10 @@ public interface CskaoyanMallTopicMapper {
     int insert(CskaoyanMallTopic cskaoyanMallTopic);
 
     List<CskaoyanMallTopic> selectAllTopics();
+
+    List<CskaoyanMallTopic> selectAllTopic();
+
+    Integer selectTotalNumber();
+
+    List<CskaoyanMallGoods> selectGoodsById(Integer id);
 }

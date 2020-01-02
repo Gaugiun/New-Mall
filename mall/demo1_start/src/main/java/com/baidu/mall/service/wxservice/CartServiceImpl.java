@@ -59,7 +59,7 @@ public class CartServiceImpl implements CartService{
         cskaoyanMallCart.setGoodsId(cskaoyanMallGoodsProduct.getGoodsId());
         cskaoyanMallCart.setGoodsName(cskaoyanMallGoods.getName());
         cskaoyanMallCart.setGoodsSn(cskaoyanMallGoods.getGoodsSn());
-        cskaoyanMallCart.setNumber(number);
+        cskaoyanMallCart.setNumber(Short.parseShort(cskaoyanMallGoodsProduct.getNumber().toString()));
         cskaoyanMallCart.setAddTime(new Date(System.currentTimeMillis()));
         cskaoyanMallCart.setUpdateTime(new Date(System.currentTimeMillis()));
         cskaoyanMallCart.setChecked(false);

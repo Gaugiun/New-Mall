@@ -11,4 +11,7 @@ public interface CskaoyanMallGrouponMapper {
 
     int updateByPrimaryKey(CskaoyanMallGroupon record);
 
+    CskaoyanMallGroupon selectByUserId(Integer userId);
+
+    CskaoyanMallGroupon selectByCreatorUserId(Integer userId);
 }

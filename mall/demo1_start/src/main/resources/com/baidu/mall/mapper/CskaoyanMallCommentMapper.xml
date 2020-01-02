@@ -99,4 +99,26 @@
   <update id="deleteByPrimaryKey">
     update cskaoyan_mall_comment set `deleted` = 1
   </update>
+
+  <select id="selectTopicComments" resultType="com.baidu.mall.bean.wx.BaseWxTopicComment">
+    SELECT c.content,c.pic_urls,c.add_time,u.nickname,u.avatar FROM cskaoyan_mall_comment c LEFT JOIN cskaoyan_mall_user u
+    ON c.user_id = u.id WHERE c.deleted = 0 AND c.value_id = #{valueId} AND c.type = #{type} ORDER BY c.id DESC
+  </select>
+  <insert id="insert">
+    insert into cskaoyan_mall_comment (id, value_id, type,
+    content, user_id, has_picture,
+    pic_urls, star, add_time,
+    update_time, deleted)
+    values (#{id,jdbcType=INTEGER}, #{valueId,jdbcType=INTEGER}, #{type,jdbcType=TINYINT},
+    #{content,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{hasPicture,jdbcType=BIT},
+    #{picUrls,jdbcType=VARCHAR}, #{star,jdbcType=SMALLINT}, #{addTime,jdbcType=TIMESTAMP},
+    #{updateTime,jdbcType=TIMESTAMP}, #{deleted,jdbcType=BIT})
+  </insert>
+  <select id="selectCountById" resultType="int">
+    select count(id) from cskaoyan_mall_comment where value_id = #{valueId}
+  </select>
+  <select id="selectPicCountById" resultType="int">
+    select count(id) from cskaoyan_mall_comment
+    where value_id = #{valueId} and has_picture = 1
+  </select>
 </mapper>

@@ -146,4 +146,15 @@
       select <include refid="Base_Column_List"/>
    from cskaoyan_mall_topic
     </select>
+
+  <select id="selectAllTopic" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" /> from cskaoyan_mall_topic
+  </select>
+  <select id="selectTotalNumber" resultType="java.lang.Integer">
+    select count(id) from cskaoyan_mall_topic
+  </select>
+  <select id="selectGoodsById" resultType="com.baidu.mall.bean.CskaoyanMallGoods">
+    select goods from cskaoyan_mall_topic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
 </mapper>
