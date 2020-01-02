@@ -1,5 +1,7 @@
 package com.baidu.mall.bean;
 
+import com.baidu.mall.utils.md5.Md5Util;
+
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -44,8 +46,13 @@ public class CskaoyanMallAdmin {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+    public void setPassword(String password) throws Exception {
+
+        String newPassword = password == null ? null : password.trim();
+        if (newPassword != null) {
+            newPassword = Md5Util.getMd5(newPassword);
+        }
+        this.password = newPassword;
     }
 
     public String getLastLoginIp() {

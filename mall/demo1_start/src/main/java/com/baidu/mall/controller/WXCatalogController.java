@@ -98,16 +98,17 @@ public class WXCatalogController {
         return baseRespVo;
     }
 
-/*
-    */
-/**
+/*    *//**
+    /**
      * 显示该二级目录（商品分类）下的所有商品
      * @param categoryId
      * @param page
      * @param size
      * @return
+     */
+    /*@RequestMapping("goods/list")
+>>>>>>> Stashed changes
      *//*
-
     @RequestMapping("goods/list")
     public BaseRespVo goodsList(Integer categoryId, Integer page, Integer size){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
@@ -122,8 +123,7 @@ public class WXCatalogController {
         baseRespVo.setErrno(0);
         baseRespVo.setErrmsg("成功");
         return baseRespVo;
-    }
-*/
+    }*/
 
 
 

@@ -28,13 +28,12 @@ public class AdminController {
      * @param map
      * @return
      */
+
     @RequestMapping("auth/login")
     public BaseRespVo login(@RequestBody HashMap<String, String> map){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
         String username = map.get("username");
         String password = map.get("password");
-        Subject subject = SecurityUtils.getSubject();
-        try {
             MallToken adminToken = new MallToken(username, password, "admin");
             subject.login(adminToken);
 

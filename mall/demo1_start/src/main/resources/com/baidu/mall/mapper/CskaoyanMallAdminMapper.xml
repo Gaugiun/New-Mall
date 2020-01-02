@@ -94,4 +94,10 @@
   <insert id="addAdmin" parameterType="com.baidu.mall.bean.CskaoyanMallAdmin">
     INSERT INTO cskaoyan_mall_admin VALUES (NULL, #{username}, #{password}, NULL, NULL, #{avatar}, NULL, NULL, 0, #{roleIds})
   </insert>
+  <select id="selectAdminByUsername" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/> from cskaoyan_mall_admin where username = #{username} and deleted = false
+  </select>
+  <select id="selectRoleIdsByUsername" resultType="java.lang.String">
+    select role_ids from cskaoyan_mall_admin where username = #{username}
+  </select>
 </mapper>
