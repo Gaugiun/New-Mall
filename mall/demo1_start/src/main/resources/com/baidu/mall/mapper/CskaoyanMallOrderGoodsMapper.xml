@@ -98,7 +98,7 @@
     from cskaoyan_mall_order_goods
     <where>
       <if test="orderId != null">
-        order_id = #{orderId,jdbcType=INTEGER},
+        order_id = #{orderId,jdbcType=INTEGER}
       </if>
     </where>
   </select>

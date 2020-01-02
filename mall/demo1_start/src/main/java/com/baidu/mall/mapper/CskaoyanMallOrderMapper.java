@@ -1,5 +1,6 @@
 package com.baidu.mall.mapper;
 
+import com.baidu.mall.bean.BaseWxOrderVo;
 import com.baidu.mall.bean.CskaoyanMallOrder;
 import com.baidu.mall.bean.StatisticsOrderRow;
 import org.apache.ibatis.annotations.Param;
@@ -26,4 +27,12 @@ public interface CskaoyanMallOrderMapper {
     CskaoyanMallOrder selectByOrderId(Integer orderId);
 
     List<StatisticsOrderRow> selectAll();
+
+    List<BaseWxOrderVo> selectOrderListByType(Integer showType);
+
+    String selectStatusText(int id);
+
+    void cancelOrderById(Integer orderId);
+
+    void prepayOrderById(Integer orderId);
 }
