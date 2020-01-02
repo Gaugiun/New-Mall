@@ -8,7 +8,6 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface CskaoyanMallUserMapper {
@@ -28,6 +27,7 @@ public interface CskaoyanMallUserMapper {
 
     CskaoyanMallUser selectByUsername(String username);
 
+    String  selectPasswordByUsername(@Param("username") String username);
     void addUser(@Param("username") String username, @Param("password") String password, @Param("mobile") String mobile, @Param("lastLoginIp")String lastLoginIp);
 
 }

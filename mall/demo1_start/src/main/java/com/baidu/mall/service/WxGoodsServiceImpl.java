@@ -87,4 +87,12 @@ public class WxGoodsServiceImpl implements WxGoodsService {
     public List<BaseWxGoods> selectGoodsListByKeywords(String keyword) {
         return cskaoyanMallGoodsMapper.selectGoodsListByKeywords(keyword);
     }
+
+    @Autowired
+    CskaoyanMallOrderGoodsMapper cskaoyanMallOrderGoodsMapper;
+
+    @Override
+    public List<CskaoyanMallOrderGoods> selectOrderGoodsListByOrderId(Integer orderId) {
+        return cskaoyanMallOrderGoodsMapper.selectByOrderId(orderId);
+    }
 }

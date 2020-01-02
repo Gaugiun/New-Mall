@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("wx")
 @RestController
@@ -45,5 +46,33 @@ public class WXHomeController {
 
         return resp;
     }
+
+
+    @RequestMapping("user/index")
+    public BaseRespVo UserIndex(){
+/*        "order":{
+            "unrecv":0,
+            "uncomment":0,
+            "unpaid":0,
+            "unship":0
+        }*/
+
+        Map<Object, Integer> orderStatus = new HashMap<>();
+        //orderStatus.put("unrecv",);
+        //orderStatus.put("uncomment",);
+        //orderStatus.put("unpaid",);
+        //orderStatus.put("unship",);
+
+        HashMap<Object, Object> Data = new HashMap<>();
+        Data.put("order",orderStatus);
+
+        BaseRespVo resp = new BaseRespVo();
+        resp.setData(Data);
+        resp.setErrno(0);
+        resp.setErrmsg("成功");
+
+        return resp;
+    }
+
 
 }
