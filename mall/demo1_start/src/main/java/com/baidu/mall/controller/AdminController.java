@@ -75,4 +75,5 @@ public class AdminController {
         return "http://localhost:9527/#/login?redirect=%2Fdashboard";
     }
 
+
 }
