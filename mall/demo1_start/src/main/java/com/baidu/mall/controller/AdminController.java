@@ -1,5 +1,6 @@
 package com.baidu.mall.controller;
 
+import com.baidu.mall.bean.AuthInfoBean;
 import com.baidu.mall.bean.BaseRespVo;
 import com.baidu.mall.service.AdminService;
 import com.baidu.mall.shiro.MallToken;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 @RestController
 @RequestMapping("admin")
 public class AdminController {
+    private String userName;
 
     @Autowired
     AdminService adminService;
@@ -33,6 +35,7 @@ public class AdminController {
     public BaseRespVo login(@RequestBody HashMap<String, String> map){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
         String username = map.get("username");
+        userName = username;
         String password = map.get("password");
         Subject subject = SecurityUtils.getSubject();
         MallToken adminToken = new MallToken(username, password, "admin");
@@ -55,20 +58,15 @@ public class AdminController {
         BaseRespVo baseRespVo = new BaseRespVo();
         baseRespVo.setErrno(0);
         baseRespVo.setErrmsg("成功");
-        HashMap<String, Object> map = new HashMap<>();
+//        HashMap<String, Object> map = new HashMap<>();
 
-        //adminService.select
+        AuthInfoBean authInfoBean = adminService.selectByUserName(userName);
 
-        map.put("name","admin123");
-        map.put("avatar","https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif");
-        ArrayList<String> roleList = new ArrayList<>();
-        roleList.add("超级管理员");
-        ArrayList<String> permList = new ArrayList<>();
-        permList.add("*");
-
-        map.put("roles",roleList);
-        map.put("perms",permList);
-        baseRespVo.setData(map);
+/*        map.put("name",authInfoBean.getName());
+        map.put("avatar",authInfoBean.getAvatar());
+        map.put("roles",authInfoBean.getRoles());
+        map.put("perms",authInfoBean.getPerms());*/
+        baseRespVo.setData(authInfoBean);
         return baseRespVo;
     }
 

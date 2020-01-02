@@ -30,10 +30,16 @@ public class ShiroConfig {
         filterMap.put("/admin/auth/login","anon");
         filterMap.put("/admin/auth/info","anon");
         filterMap.put("/wx/auth/login","anon");
+        filterMap.put("/wx/auth/register","anon");
+        filterMap.put("/wx/home/index","anon");
+        filterMap.put("/wx/catalog/index","anon");
+        filterMap.put("/wx/goods/**","anon");
+        filterMap.put("/wx/catalog/current","anon");
 
         // 需要认证才能访问的路径
-        filterMap.put("/**","authc");
+        filterMap.put("/admin/**","authc");
         filterMap.put("/wx/**","authc");
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterMap);
         return shiroFilterFactoryBean;
     }

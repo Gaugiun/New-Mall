@@ -26,7 +26,8 @@ public class AdminRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String userName = token.getUsername();
         CskaoyanMallAdmin cskaoyanMallAdmin = cskaoyanMallAdminMapper.selectByName(userName);
-        String credential = cskaoyanMallAdmin.getPassword();
+        String credential = cskaoyanMallAdmin.getUsername();
+
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(userName, credential, this.getName());
         return authenticationInfo;
     }
