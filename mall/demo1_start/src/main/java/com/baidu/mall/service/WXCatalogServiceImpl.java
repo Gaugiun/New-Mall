@@ -245,6 +245,13 @@ public class WXCatalogServiceImpl implements WXCatalogService {
         }
         return list;
     }
+    @Autowired
+    CskaoyanMallTokenMapper cskaoyanMallTokenMapper;
 
+    @Override
+    public boolean saveToken(String token, Integer userId) {
+        boolean b = cskaoyanMallTokenMapper.insert(token, userId);
+        return b;
+    }
 
 }

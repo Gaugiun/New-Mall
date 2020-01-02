@@ -37,4 +37,6 @@ public interface CskaoyanMallOrderMapper {
     void prepayOrderById(Integer orderId);
 
     void refundOrderById(Integer orderId);
+
+    Integer selectOrderListSizeByUserIdAndStatus(Integer userId, int i);
 }

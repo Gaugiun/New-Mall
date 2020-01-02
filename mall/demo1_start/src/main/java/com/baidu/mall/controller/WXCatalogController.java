@@ -156,6 +156,7 @@ public class WXCatalogController {
         String format = s.format(date);
         data.put("tokenExpire", format);
         data.put("token", id);
+        boolean b = wxCatalogService.saveToken(id.toString(), userId);
         if (cskaoyanMallUser != null) {
             baseRespVo.setErrno(0);
             baseRespVo.setData(data);
