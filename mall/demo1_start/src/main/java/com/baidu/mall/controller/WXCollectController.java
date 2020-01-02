@@ -44,10 +44,10 @@ public class WXCollectController {
     @RequestMapping("collect/addordelete")
     public BaseRespVo addOrDeleteCollect(@RequestBody Map map) {
         BaseRespVo baseRespVo = new BaseRespVo();
-        Byte type = (Byte) map.get("type");
+        Integer type = (Integer) map.get("type");
         Integer valueId = (Integer) map.get("valueId");
         Map map1 = new LinkedHashMap();
-        String changeType = wxCollectService.addOrDeleteCollect(type, valueId);
+        String changeType = wxCollectService.addOrDeleteCollect(Byte.parseByte(type.toString()), valueId);
         map1.put("type", changeType);
         baseRespVo.setErrno(0);
         baseRespVo.setData(map1);
