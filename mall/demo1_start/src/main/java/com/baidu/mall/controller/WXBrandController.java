@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RequestMapping("wx")
 @RestController
 public class WXBrandController {
@@ -19,8 +22,11 @@ public class WXBrandController {
     public BaseRespVo UserList(@RequestParam("id") Integer id){
         CskaoyanMallBrand cskaoyanMallBrand = cskaoyanMallBrandMapper.selectByPrimaryKey(id);
 
+        Map<Object, Object> map = new HashMap<>();
+        map.put("brand",cskaoyanMallBrand);
+
         BaseRespVo resp = new BaseRespVo();
-        resp.setData(cskaoyanMallBrand);
+        resp.setData(map);
         resp.setErrno(0);
         resp.setErrmsg("成功");
 

@@ -34,6 +34,8 @@ public class ShiroConfig {
         filterMap.put("/wx/home/index","anon");
         filterMap.put("/wx/catalog/index","anon");
         filterMap.put("/wx/goods/**","anon");
+        filterMap.put("/wx/brand/**","anon");
+        //filterMap.put("/wx/coupon/**","anon");
         filterMap.put("/wx/catalog/current","anon");
 
         // 需要认证才能访问的路径

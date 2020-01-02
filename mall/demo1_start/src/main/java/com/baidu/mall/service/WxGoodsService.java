@@ -18,4 +18,6 @@ public interface WxGoodsService {
     List<CskaoyanMallOrderGoods> selectOrderGoodsListByOrderId(Integer orderId);
 
     List<BaseWxGoods> selectGoodsListByKeywords(String keyword);
+
+    List<CskaoyanMallGoods> selectGoodsListByBrandId(Integer brandId);
 }
