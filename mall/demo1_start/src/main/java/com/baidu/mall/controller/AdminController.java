@@ -34,9 +34,10 @@ public class AdminController {
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
         String username = map.get("username");
         String password = map.get("password");
-            MallToken adminToken = new MallToken(username, password, "admin");
-            subject.login(adminToken);
-
+        Subject subject = SecurityUtils.getSubject();
+        MallToken adminToken = new MallToken(username, password, "admin");
+        subject.login(adminToken);
+        try {
             Serializable id = subject.getSession().getId();
             baseRespVo.setErrno(0);
             baseRespVo.setData(id);
