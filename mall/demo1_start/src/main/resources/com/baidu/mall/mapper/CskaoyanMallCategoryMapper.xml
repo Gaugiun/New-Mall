@@ -140,4 +140,34 @@
       select <include refid="Base_Column_List"/> from cskaoyan_mall_category where id != #{categoryId}
     </select>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <resultMap id="BaseResultMap2" type="com.baidu.mall.bean.goodsbean.GoodsCategory">
+    <id column="id" jdbcType="INTEGER" property="value" />
+    <result column="name" jdbcType="VARCHAR" property="label" />
+  </resultMap>
+  <select id="selectCatgryByTypeId" resultMap="BaseResultMap2" >
+    select id, name from cskaoyan_mall_category where level = #{level }
+  </select>
+
+  <resultMap id="BaseResultMap3" type="com.baidu.mall.bean.goodsbean.Children">
+    <id column="id" jdbcType="INTEGER" property="value" />
+    <result column="name" jdbcType="VARCHAR" property="label" />
+  </resultMap>
+  <select id="selectChildren" resultMap="BaseResultMap3">
+    select  id, name from cskaoyan_mall_category where pid = #{pid}
+  </select>
 </mapper>

@@ -35,16 +35,19 @@
     pay_id, pay_time, ship_sn, ship_channel, ship_time, confirm_time, comments, end_time,
     add_time, update_time, deleted
   </sql>
+  <sql id="BaseWxOrderVo">
+    order_status as orderStatus ,order_sn as orderSn,actual_price as actualPrice,id
+  </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     from cskaoyan_mall_order
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cskaoyan_mall_order
+  <update id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    update cskaoyan_mall_order set deleted = 1, order_status = 0
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+  </update>
   <update id="updateByPrimaryKeySelective" parameterType="com.baidu.mall.bean.CskaoyanMallOrder">
     update cskaoyan_mall_order
     <set>
@@ -211,4 +214,36 @@
   <select id="selectAll" resultType="com.baidu.mall.bean.StatisticsOrderRow">
       select CAST(confirm_time AS CHAR(10)) AS `day`, COUNT(id) AS orders, COUNT(DISTINCT user_id) AS customers, SUM(order_price) AS amount, CAST(SUM(order_price)/COUNT(DISTINCT user_id) AS decimal(10,2)) AS pcr FROM cskaoyan_mall_order GROUP BY `day`
   </select>
+    <select id="selectOrderListByType" resultType="com.baidu.mall.bean.BaseWxOrderVo" parameterType="integer">
+      select <include refid="BaseWxOrderVo"/> from cskaoyan_mall_order
+      <where>
+        <if test="showType==0">
+
+        </if>
+        <if test="showType==1">
+          and order_status = 101
+        </if>
+        <if test="showType==2">
+          and order_status = 201
+        </if>
+        <if test="showType==3">
+          and order_status = 301
+        </if>
+        <if test="showType==4">
+          and order_status = 401 or order_status = 402
+        </if>
+      </where>
+    </select>
+  <select id="selectStatusText" resultType="java.lang.String" parameterType="int">
+    select status from cskaoyan_mall_order_status where id = #{id}
+  </select>
+  <update id="cancelOrderById">
+    update cskaoyan_mall_order set order_status = 102 where id = #{orderId}
+  </update>
+  <update id="prepayOrderById">
+    update cskaoyan_mall_order set order_status = 201 where id = #{orderId}
+  </update>
+  <update id="refundOrderById">
+    update cskaoyan_mall_order set order_status = 202 where id = #{orderId}
+  </update>
 </mapper>

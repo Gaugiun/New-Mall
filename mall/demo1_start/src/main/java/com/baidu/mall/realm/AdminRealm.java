@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CustomRealm extends AuthorizingRealm {
+public class AdminRealm extends AuthorizingRealm {
     @Autowired
     CskaoyanMallAdminMapper cskaoyanMallAdminMapper;
 
@@ -26,13 +26,14 @@ public class CustomRealm extends AuthorizingRealm {
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         String userName = token.getUsername();
         CskaoyanMallAdmin cskaoyanMallAdmin = cskaoyanMallAdminMapper.selectByName(userName);
-        String credential = cskaoyanMallAdmin.getPassword();
+        String credential = cskaoyanMallAdmin.getUsername();
+
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(userName, credential, this.getName());
         return authenticationInfo;
     }
 
     /**
-     * 自定义授权
+     * 自定义授权 目前还没写
      * @param principalCollection
      * @return
      */

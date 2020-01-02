@@ -2,14 +2,19 @@ package com.baidu.mall.controller;
 
 import com.baidu.mall.bean.*;
 import com.baidu.mall.service.WXCatalogService;
-import com.baidu.mall.utils.md5.Md5Util;
+import com.baidu.mall.shiro.MallToken;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -101,8 +106,6 @@ public class WXCatalogController {
      * @param size
      * @return
      */
-/*    @RequestMapping("goods/list")
-=======*/
     /*@RequestMapping("goods/list")
 >>>>>>> Stashed changes
      *//*
@@ -134,21 +137,25 @@ public class WXCatalogController {
     public BaseRespVo authLogin(@RequestBody HashMap<String, String> hashMap){
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
         String username = hashMap.get("username");
-        String oldPassword = hashMap.get("password");
-        String password = Md5Util.getMd5(oldPassword);
+        String password = hashMap.get("password");
         CskaoyanMallUser cskaoyanMallUser = wxCatalogService.authLogin(username, password);
 
-        if (cskaoyanMallUser != null) {
-            userId = cskaoyanMallUser.getId();
-        }
+        userId = cskaoyanMallUser.getId();
 
         HashMap data = new HashMap();
         HashMap userInfo = new HashMap();
         userInfo.put("nickName", cskaoyanMallUser.getNickname());
         userInfo.put("avatarUrl", cskaoyanMallUser.getAvatar());
         data.put("userInfo", userInfo);
-        data.put("tokenExpire", "2019-12-31T04:18:41.598");
-        data.put("token", "0xitqrh84nfhy2gfnxhk6mx8k8wxmfz9");
+        Subject subject = SecurityUtils.getSubject();
+        MallToken adminToken = new MallToken(username, password, "wx");
+        subject.login(adminToken);
+        Serializable id = subject.getSession().getId();
+        Date date = new Date();
+        SimpleDateFormat s = new SimpleDateFormat("yyyy-MM-dd HH:mm:sss");
+        String format = s.format(date);
+        data.put("tokenExpire", format);
+        data.put("token", id);
         if (cskaoyanMallUser != null) {
             baseRespVo.setErrno(0);
             baseRespVo.setData(data);

@@ -77,4 +77,26 @@
   <select id="selectById" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/> from cskaoyan_mall_goods_product where goods_id = #{id}
   </select>
+  <insert id="addProduct">
+    INSERT INTO cskaoyan_mall_goods_product VALUES (NULL, #{product.goodsId}, #{product.specifications}, #{product.price}, #{product.number}, #{product.url}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0)
+  </insert>
+  <select id="selectsByGoodsId" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List"/>
+    from cskaoyan_mall_goods_product
+    <where>
+      goods_id = #{goodsId}
+    </where>
+  </select>
+    <update id="updateProductByPrimaryId">
+      update cskaoyan_mall_goods_product
+      set goods_id = #{product.goodsId,jdbcType=INTEGER},
+      specifications = #{product.specifications,jdbcType=VARCHAR},
+      price = #{product.price,jdbcType=DECIMAL},
+      number = #{product.number,jdbcType=INTEGER},
+      url = #{product.url,jdbcType=VARCHAR},
+      add_time = CURRENT_TIMESTAMP,
+      update_time = CURRENT_TIMESTAMP,
+      deleted = 0
+      where id = #{product.id,jdbcType=INTEGER}
+    </update>
 </mapper>
