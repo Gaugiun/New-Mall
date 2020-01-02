@@ -72,4 +72,40 @@
   <select id="selectGoodsSpecificationByGoodsIdAndSpec" resultMap="BaseResultMap">
     select <include refid="Base_Column_List"/> from cskaoyan_mall_goods_specification where goods_id = #{id} and specification = #{s}
   </select>
+    <insert id="addSpecification">
+      INSERT INTO cskaoyan_mall_goods_specification VALUES (NULL, #{specification.goodsId}, #{specification.specification}, #{specification.value}, #{specification.picUrl}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0)
+    </insert>
+  <select id="selectGoodsSpecificationByGoodsId" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    from cskaoyan_mall_goods_specification
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+  <update id="updateSpecificationByPrimaryKey" parameterType="java.util.Map">
+    update cskaoyan_mall_goods_specification
+    <set>
+      <if test="specification.goodsId != null">
+        goods_id = #{specification.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="specification.specification != null">
+        specification = #{specification.specification,jdbcType=VARCHAR},
+      </if>
+      <if test="specification.value != null">
+        value = #{specification.value,jdbcType=VARCHAR},
+      </if>
+      <if test="specification.picUrl != null">
+        pic_url = #{specification.picUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="specification.addTime != null">
+        add_time = CURRENT_TIMESTAMP,
+      </if>
+      <if test="specification.updateTime != null">
+        update_time = CURRENT_TIMESTAMP,
+      </if>
+      <if test="specification.deleted != null">
+        deleted = 0,
+      </if>
+    </set>
+    where id = #{specification.id,jdbcType=INTEGER}
+  </update>
 </mapper>

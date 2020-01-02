@@ -24,10 +24,7 @@
     from cskaoyan_mall_comment
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from cskaoyan_mall_comment
-    where id = #{id,jdbcType=INTEGER}
-  </delete>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.baidu.mall.bean.CskaoyanMallComment">
     update cskaoyan_mall_comment
     <set>
@@ -81,4 +78,25 @@
     <select id="selectByValueId" resultMap="BaseResultMap">
       select <include refid="Base_Column_List"/> from cskaoyan_mall_comment where value_id = #{id}
     </select>
+
+  <select id="selectGoodsComment" resultType="com.baidu.mall.bean.goodsbean.GoodsComment">
+    select <include refid="Base_Column_List" /> from cskaoyan_mall_comment where `deleted` = 0
+      <if test="userId!=null">
+        <bind name="userId" value="'%' + userId + '%'"/>
+        and user_id like #{userId}
+      </if>
+      <if test="valueId!=null">
+        <bind name="valueId" value="'%' + valueId + '%'"/>
+        and value_id like #{valueId}
+      </if>
+  </select>
+  <select id="selectTypeByPrimaryKey" parameterType="Integer" resultType="java.lang.Boolean">
+    SELECT `type` FROM cskaoyan_mall_comment WHERE id = #{commentId}
+  </select>
+  <update id="updateTypeByPrimaryKey">
+    UPDATE cskaoyan_mall_comment SET TYPE = 0 WHERE id = #{commentId}
+  </update>
+  <update id="deleteByPrimaryKey">
+    update cskaoyan_mall_comment set `deleted` = 1
+  </update>
 </mapper>

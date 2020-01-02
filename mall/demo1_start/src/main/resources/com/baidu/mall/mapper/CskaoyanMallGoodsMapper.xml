@@ -206,4 +206,81 @@
      </if>
    </where>
     </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <resultMap id="BaseResultMap1" type="com.baidu.mall.bean.goodsbean.GoodsFirstBean">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="goods_sn" jdbcType="VARCHAR" property="goodsSn" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="category_id" jdbcType="INTEGER" property="categoryId" />
+    <result column="brand_id" jdbcType="INTEGER" property="brandId" />
+    <result column="gallery" jdbcType="VARCHAR" property="gallery" />
+    <result column="keywords" jdbcType="VARCHAR" property="keywords" />
+    <result column="brief" jdbcType="VARCHAR" property="brief" />
+    <result column="is_on_sale" jdbcType="BIT" property="isOnSale" />
+    <result column="sort_order" jdbcType="SMALLINT" property="sortOrder" />
+    <result column="pic_url" jdbcType="VARCHAR" property="picUrl" />
+    <!-- <result column="share_url" jdbcType="VARCHAR" property="shareUrl" />-->
+    <result column="is_new" jdbcType="BIT" property="isNew" />
+    <result column="is_hot" jdbcType="BIT" property="isHot" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="counter_price" jdbcType="DECIMAL" property="counterPrice" />
+    <result column="retail_price" jdbcType="DECIMAL" property="retailPrice" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="deleted" jdbcType="BIT" property="deleted" />
+  </resultMap>
+
+  <select id="selectGoods" resultMap="BaseResultMap1">
+    select <include refid="Base_Column_List" /> from cskaoyan_mall_goods WHERE `deleted` = 0
+      <if test="name!=null">
+        <bind name="name" value="'%' + name + '%'"/>
+        AND name like #{name}
+      </if>
+      <if test="goodsSn!=null">
+        <bind name="goodsSn" value="'%' + goodsSn + '%'"/>
+        AND goods_Sn like #{goodsSn}
+      </if>
+  </select>
+    <insert id="addGood" useGeneratedKeys="true" keyProperty="id" keyColumn="id" parameterType="java.util.Map" >
+      INSERT INTO cskaoyan_mall_goods VALUES (NULL, #{goods.goodsSn}, #{goods.name}, #{goods.categoryId}, #{goods.brandId}, #{goods.gallery}, #{goods.keywords}, #{goods.brief}, #{goods.isOnSale}, NULL, #{goods.picUrl}, NULL, #{goods.isNew}, #{goods.isHot}, #{goods.unit}, #{goods.counterPrice}, #{goods.retailPrice}, #{goods.detail}, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0)
+    </insert>
+  <select id="selectLastInsertId" resultType="java.lang.Integer">
+      SELECT id FROM cskaoyan_mall_goods ORDER BY id DESC limit 1
+  </select>
+  <update id="updateGoodByPrimaryKey" parameterType="java.util.Map">
+    update cskaoyan_mall_goods
+    set goods_sn = #{goods.goodsSn},
+    name = #{goods.name},
+    category_id = #{goods.categoryId},
+    brand_id = #{goods.brandId},
+    gallery = #{goods.gallery},
+    keywords = #{goods.keywords},
+    brief = #{goods.brief},
+    is_on_sale = #{goods.isOnSale},
+    sort_order = #{goods.sortOrder},
+    pic_url = #{goods.picUrl},
+    share_url = #{goods.shareUrl},
+    is_new = #{goods.isNew},
+    is_hot = #{goods.isHot},
+    unit = #{goods.unit},
+    counter_price = #{goods.counterPrice},
+    retail_price = #{goods.retailPrice},
+    add_time = CURRENT_TIMESTAMP ,
+    update_time = CURRENT_TIMESTAMP,
+    deleted = 0
+    where id = #{goods.id}
+  </update>
 </mapper>

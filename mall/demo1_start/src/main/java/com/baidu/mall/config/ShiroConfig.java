@@ -1,3 +1,4 @@
+/*
 package com.baidu.mall.config;
 
 import com.baidu.mall.realm.CustomRealm;
@@ -44,11 +45,14 @@ public class ShiroConfig {
         return defaultWebSecurityManager;
     }
 
-    /**
+    */
+/**
      *  声明式鉴权 注解需要的组件
      * @param securityManager
      * @return
-     */
+     *//*
+
+
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(DefaultWebSecurityManager securityManager){
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
@@ -64,3 +68,5 @@ public class ShiroConfig {
 
 
 }
+
+*/

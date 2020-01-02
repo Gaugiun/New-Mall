@@ -1,6 +1,7 @@
 package com.baidu.mall.mapper;
 
 import com.baidu.mall.bean.CskaoyanMallBrand;
+import com.baidu.mall.bean.goodsbean.GoodsBrand;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -28,4 +29,6 @@ public interface CskaoyanMallBrandMapper {
     List<CskaoyanMallBrand> selectAllBrand();
 
     CskaoyanMallBrand selectBrandByGoodsId(Integer id);
+
+    List<GoodsBrand> selectBrand2();
 }

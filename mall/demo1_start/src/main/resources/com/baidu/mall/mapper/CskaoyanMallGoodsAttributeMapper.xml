@@ -60,4 +60,18 @@
     <select id="selectAttributeByGoodsId" resultMap="BaseResultMap">
       select <include refid="Base_Column_List"/> from cskaoyan_mall_goods_attribute where goods_id = #{id}
     </select>
+    <insert id="addGoodsAttribute">
+      INSERT  INTO cskaoyan_mall_goods_attribute VALUES (NULL, #{goodsAttribute.goodsId}, #{goodsAttribute.attribute}, #{goodsAttribute.value}, current_timestamp, current_timestamp, 0)
+    </insert>
+
+    <update id="updateAttributeByPrimary" parameterType="java.util.Map">
+      update cskaoyan_mall_goods_attribute
+      set goods_id = #{goodsAttribute.goodsId},
+      attribute = #{goodsAttribute.attribute},
+      `value` = #{goodsAttribute.value},
+      add_time = CURRENT_TIMESTAMP ,
+      update_time = CURRENT_TIMESTAMP,
+      deleted = 0
+      where id = #{goodsAttribute.id,jdbcType=INTEGER}
+    </update>
 </mapper>

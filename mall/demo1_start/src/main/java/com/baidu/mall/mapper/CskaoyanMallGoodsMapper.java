@@ -2,8 +2,11 @@ package com.baidu.mall.mapper;
 
 import com.baidu.mall.bean.BaseWxGoods;
 import com.baidu.mall.bean.CskaoyanMallGoods;
+import com.baidu.mall.bean.goodsbean.GoodsFirstBean;
+import com.sun.javafx.collections.MappingChange;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -33,6 +36,13 @@ public interface CskaoyanMallGoodsMapper {
 
     List<CskaoyanMallGoods> selectGoodsListByCategoryId(Integer categoryId);
 
-
     List<BaseWxGoods> selectGoodsListByKeywords(String keywords);
+
+    List<GoodsFirstBean> selectGoods(@Param("goodsSn") Integer goodsSn, @Param("name") String name);
+
+    void addGood(@Param("goods") LinkedHashMap<String, Object> goods);
+
+    Integer selectLastInsertId();
+
+    void updateGoodByPrimaryKey(@Param("goods") LinkedHashMap<String, Object> goods);
 }

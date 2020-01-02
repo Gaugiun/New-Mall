@@ -22,7 +22,7 @@ public class AdminController {
      * @param map
      * @return
      */
-    @RequestMapping("auth/login")
+    /*@RequestMapping("auth/login")
     public BaseRespVo adminLogin(@RequestBody LoginVo loginVo) {
         BaseRespVo baseRespVo = new BaseRespVo();
         Subject subject = SecurityUtils.getSubject();
@@ -39,9 +39,9 @@ public class AdminController {
         baseRespVo.setErrno(0);
         baseRespVo.setErrmsg("成功");
         return baseRespVo;
-    }
+    }*/
 
-    /*@RequestMapping("auth/login")
+    @RequestMapping("auth/login")
     public BaseRespVo login(@RequestBody HashMap<String, String> map){
 
         BaseRespVo<Object> baseRespVo = new BaseRespVo<>();
@@ -56,7 +56,7 @@ public class AdminController {
             return baseRespVo;
         }
         return baseRespVo;
-    }*/
+    }
 
     @RequestMapping("auth/info")
     public BaseRespVo info(){
